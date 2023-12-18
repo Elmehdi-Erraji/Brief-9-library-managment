@@ -41,7 +41,7 @@
                                         </p>
 
                                         <!-- form -->
-                                        <form action="../controllers/users/user.controller.php" method="post">
+                                        <form action="../../app/controllers/UserController.php" method="post">
                                             <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Email address</label>
                                                 <input class="form-control" type="email" name="email" id="emailaddress" required=""

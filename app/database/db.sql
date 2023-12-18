@@ -5,11 +5,9 @@ create table users(
     id int primary key AUTO-INCREMENT,
     fullname varchar(100),
     lastname varchar(100),
-    email varchar(255),
-    password varchar(255),
+    email varchar(255), 
     phone varchar(255),
-    budget float
-
+    password varchar(255)
 );
 
 create table roles(

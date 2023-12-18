@@ -55,7 +55,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Phone number</label>
-                                                <input class="form-control" type="email" name="phone"  id="phone" required="" placeholder="Enter your phone number">
+                                                <input class="form-control" type="phone" name="phone"  id="phone" required="" placeholder="Enter your phone number">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="password" class="form-label">Password</label>

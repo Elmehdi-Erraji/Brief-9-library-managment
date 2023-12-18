@@ -10,18 +10,17 @@ class User {
     public $email;
     public $phone;
     public $password;
-    public $budget;
     public $table_name = "users";
 
 
-    public function __construct($fullname,$lastname,$email,$phone,$password,$budget)
+    public function __construct($fullname,$lastname,$email,$phone,$password)
     {
         $this->fullname = $fullname;
         $this->lastname = $lastname;
         $this->email = $email;
         $this->phone = $phone;
         $this->password = $password;
-        $this->budget = $budget;
+  
     }
 
       
@@ -76,12 +75,4 @@ class User {
         $this->password = $password;
     }
 
-    
-    public function getBudget() {
-        return $this->budget;
-    }
-
-    public function setBudget($budget) {
-        $this->budget = $budget;
-    }
 }

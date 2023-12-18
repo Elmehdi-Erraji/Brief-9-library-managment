@@ -17,15 +17,14 @@ class UserDAO {
     public function createUser(User $user) {
         $fullname = $user->getFullName();
         $lastname = $user->getLastName();
-        $email = $user->getEmail();
-        $password = $user->getPassword();
+        $email = $user->getEmail(); 
         $phone = $user->getPhone();
-        $budget = $user->getBudget();
-    
-        $query = "INSERT INTO users (fullname, lastname, email, password, phone, budget) VALUES (?, ?, ?, ?, ?, ?)";
+        $password = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+       
+        $query = "INSERT INTO users (fullname, lastname, email, phone,password) VALUES (?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($this->db, $query);
     
-        mysqli_stmt_bind_param($stmt, "sssssd", $fullname, $lastname, $email, $password, $phone, $budget);
+        mysqli_stmt_bind_param($stmt, "sssss", $fullname, $lastname, $email, $phone, $password);
         $success = mysqli_stmt_execute($stmt);
     
         if ($success) {
@@ -55,4 +54,44 @@ class UserDAO {
             return false; // User creation failed
         }
     }
+
+
+        public function getUserByEmail($email) {
+            $query = "SELECT * FROM users WHERE email = ?";
+            $stmt = mysqli_prepare($this->db, $query);
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $user = mysqli_fetch_assoc($result);
+        
+            if ($user) {
+                return $user; // Return the user details as an associative array
+            } else {
+                return null; // User not found
+            }
+        }
+
+        public function getUserRole($userId) {
+            $query = "SELECT roles_id FROM roles_users WHERE users_id = ?";
+            $stmt = mysqli_prepare($this->db, $query);
+            mysqli_stmt_bind_param($stmt, "i", $userId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+        
+            if (!$result) {
+                // Handle SQL error (example: return null or log the error)
+                return null;
+            }
+        
+            $role = mysqli_fetch_assoc($result);
+        
+            if (!$role) {
+                // Handle role not found (example: return null or log the issue)
+                return null;
+            }
+        
+            return $role['roles_id']; // Assuming the roles_id is the role identifier
+        }
 }
+
+
