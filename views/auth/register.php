@@ -40,14 +40,14 @@
                                         <br>
 
                                         <!-- form -->
-                                        <form action="../controllers/users/user.controller.php" method="post">
+                                        <form action="../../app/controllers/UserController.php" method="post">
                                             <div class="mb-3">
                                                 <label for="fullname" class="form-label">First Name</label>
                                                 <input class="form-control" type="text" name="username" id="first-name" placeholder="Enter your first name" required="">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="fullname" class="form-label">First Name</label>
-                                                <input class="form-control" type="text" name="first-name" id="first-name" placeholder="Enter your last name" required="">
+                                                <input class="form-control" type="text" name="last-name" id="first-name" placeholder="Enter your last name" required="">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="emailaddress" class="form-label">Email address</label>
@@ -72,7 +72,7 @@
 
                                             <div class="text-center mt-4">
                                                 <p class="text-muted fs-16">Sign in with</p>
-                                                
+
                                                 <div class="d-flex gap-2 justify-content-center mt-3">
                                                     <a href="#" class="btn btn-soft-primary"><i class="ri-facebook-circle-fill"></i></a>
                                                     <a href="#" class="btn btn-soft-danger"><i class="ri-google-fill"></i></a>

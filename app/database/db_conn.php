@@ -1,5 +1,5 @@
 <?php
-
+namespace App\database;
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Dotenv\Dotenv;
@@ -7,7 +7,7 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../..');
 $dotenv->load();
 
-class DbConnection {
+class db_conn {
     private static $connection;
 
     private function __construct()
@@ -32,7 +32,7 @@ class DbConnection {
 }
 
 // Usage without instantiating the class
-$connection = DbConnection::getConnection();
+$connection = db_conn::getConnection();
 
 if (!$connection) {
     echo "Db is connected";
