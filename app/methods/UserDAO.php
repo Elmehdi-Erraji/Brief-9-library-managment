@@ -92,6 +92,41 @@ class UserDAO {
         
             return $role['roles_id']; // Assuming the roles_id is the role identifier
         }
+
+        public static function getAllUsers() {
+            $connection = db_conn::getConnection();
+            $users = [];
+        
+            $query = "SELECT u.*, r.name AS role 
+                      FROM users u
+                      LEFT JOIN roles_users ru ON u.id = ru.users_id
+                      LEFT JOIN roles r ON ru.roles_id = r.id";
+        
+            $result = mysqli_query($connection, $query);
+        
+            if ($result) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $user = new User(
+                        $row['fullname'],
+                        $row['lastname'],
+                        $row['email'],
+                        $row['phone'],
+                        $row['password']
+                    );
+                    $user->id = $row['id']; // Set the user ID
+                    $user->role = $row['role']; // Set the role directly
+        
+                    $users[] = $user;
+                }
+                mysqli_free_result($result);
+            }
+        
+            return $users;
+        }
+
+
 }
+
+
 
 

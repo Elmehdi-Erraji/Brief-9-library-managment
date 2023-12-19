@@ -10,6 +10,8 @@ class User {
     public $email;
     public $phone;
     public $password;
+
+    public $role;
     public $table_name = "users";
 
 
@@ -73,6 +75,14 @@ class User {
 
     public function setPassword($password) {
         $this->password = $password;
+    }
+
+    public function getrole() {
+        return $this->role;
+    }
+
+    public function setrole($role) {
+        $this->role = $role;
     }
 
 }

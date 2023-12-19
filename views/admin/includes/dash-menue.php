@@ -49,10 +49,10 @@
             <div class="collapse" id="sidebarUsers">
                 <ul class="side-nav-second-level">
                     <li>
-                        <a href="userAdd.php">Add User</a>
+                        <a href="user-add.php">Add User</a>
                     </li>
                     <li>
-                        <a href="userList.php">User List</a>
+                        <a href="user-list.php">User List</a>
                     </li>
                 </ul>
             </div>

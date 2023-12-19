@@ -75,6 +75,11 @@ class UserController {
             exit();
         }
     }
+
+    public function getUsers() {
+        $users = UserDAO::getAllUsers();
+        return $users;
+    }
 }
 
 
@@ -128,56 +133,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
 
 
-
-// if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
-
-//     $email = $_POST['email'];
-//     $password = $_POST['password'];
-
-//     $connection = db_conn::getConnection();
-
-//     // Check if the connection was successful
-//     if (!$connection) {
-//         die("Database connection error."); // Handle the connection error as needed
-//     }
-
-//     $sql = "SELECT * FROM users WHERE email = ?";
-//     $stmt = mysqli_prepare($connection, $sql);
-//     mysqli_stmt_bind_param($stmt, "s", $email);
-//     mysqli_stmt_execute($stmt);
-//     $result = mysqli_stmt_get_result($stmt);
-//     $user = mysqli_fetch_assoc($result);
-
-//     if ($user) {
-//         // User found, verify password
-//         if (password_verify($password, $user['password'])) {
-//             $_SESSION['user_id'] = $user['id'];
-//             $_SESSION['fullname'] = $user['fullname'];
-//             $_SESSION['email'] = $user['email'];
-            
-//             $userDAO = new UserDAO();
-            
-//             // Fetch user role using the method
-//             $role = $userDAO->getUserRole($user['id']); 
-//             if ($role === 1) {
-//                 header('Location: /Brief-9-library-managment/views/dashboard.php');
-//                 exit();
-//             } elseif ($role === 2) {
-//                 header('Location: /Brief-9-library-managment/views/userDashboard.php');
-//                 exit();
-//             } else {
-//                 header('Location: unknown_role.php');
-//                 exit();
-//             }
-//         } else {
-//             header('Location: login.php?error=invalid_password');
-//             exit();
-//         }
-//     } else {
-//         header('Location: login.php?error=user_not_found');
-//         exit();
-//     }
-// }
 
 // Simple routing logic
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
