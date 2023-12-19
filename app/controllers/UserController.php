@@ -152,3 +152,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
         exit();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+    if (isset($_GET['user_id'])) {
+        $userId = $_GET['user_id'];
+        
+        // Load required UserDAO file
+
+        // Instantiate UserDAO to perform the deletion
+        $userDAO = new UserDAO();
+        
+        // Call the deleteUserById method in UserDAO
+        $deleted = $userDAO->deleteUserById($userId);
+
+        // Redirect back to user list
+        if ($deleted) {
+            header('Location: /Brief-9-library-managment/views/admin/user-list.php');
+            exit();
+        } else {
+            // Handle deletion failure
+            echo "Failed to delete the user.";
+        }
+    } else {
+        echo "User ID is missing.";
+    }
+}

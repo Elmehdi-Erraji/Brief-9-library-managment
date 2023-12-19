@@ -96,7 +96,8 @@ $users = $userController->getUsers();
                                             <div class="card-widgets">
                                                 <a data-bs-toggle="collapse" href="#yearly-sales-collapse" role="button" aria-expanded="false" aria-controls="yearly-sales-collapse"><i class="ri-subtract-line"></i></a>
                                                 <a href="#" data-bs-toggle="remove"><i class="ri-close-line"></i></a>
-                                            </div>   
+                                            </div> 
+                                            <a href="user-add.php"><button type="button" class="btn btn-info">Add a new User</button></a>  
 
                                             <div class="app-search d-none d-lg-block">
                                             <form style="width: 40%;" id="searchForm">
@@ -121,6 +122,7 @@ $users = $userController->getUsers();
                                                 <th>E-mail</th>
                                                 <th>Phone</th>
                                                 <th>Role</th>
+                                                <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -132,7 +134,9 @@ $users = $userController->getUsers();
                                                 <td><?php echo $user->getEmail(); ?></td>
                                                 <td><?php echo $user->getPhone(); ?></td>
                                                 <td><?php echo $user->getrole(); ?></td>
-                                               
+                                                <td>
+                                                <a href="../../app/controllers/UserController.php?action=delete&user_id=<?php echo $user->getId(); ?>" class="btn btn-danger">Delete</a>                                                <button type="button" class="btn btn-info">Update</button>
+                                                </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

@@ -125,6 +125,26 @@ class UserDAO {
         }
 
 
+        public function deleteUserById($userId) {
+            $connection = db_conn::getConnection();
+    
+            // Delete the user from the roles_users table
+            $deleteRolesUserQuery = "DELETE FROM roles_users WHERE users_id = $userId";
+            $stmtRolesUser = $connection->query($deleteRolesUserQuery);
+    
+            // Delete the user from the users table
+            $deleteUserQuery = "DELETE FROM users WHERE id = $userId";
+            $stmtUser = $connection->query($deleteUserQuery);
+    
+            // Check if both delete operations were successful
+            if ($stmtRolesUser && $stmtUser) {
+                return true; // Deletion successful
+            } else {
+                return false; // User not found or deletion failed
+            }
+        }
+
+
 }
 
 

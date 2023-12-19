@@ -7,7 +7,9 @@ create table users(
     lastname varchar(100),
     email varchar(255), 
     phone varchar(255),
-    password varchar(255)
+    password varchar(255),
+    roles_id int,
+    FOREIGN KEY (roles_id) REFERENCES roles(id)
 );
 
 create table roles(
