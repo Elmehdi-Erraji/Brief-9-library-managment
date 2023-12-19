@@ -60,10 +60,10 @@ class UserController {
 
             // Redirect based on user's role
             if ($role === 1) {
-                header('Location: /Brief-9-library-managment/views/dashboard.php');
+                header('Location: /Brief-9-library-managment/views/admin/dashboard.php');
                 exit();
             } elseif ($role === 2) {
-                header('Location: /Brief-9-library-managment/views/userDashboard.php');
+                header('Location: /Brief-9-library-managment/views/user/dashboard.php');
                 exit();
             } else {
                 header('Location: unknown_role.php');
