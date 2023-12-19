@@ -48,8 +48,8 @@ create table reservation (
     is_returned int,
     book_id int ,
     users_id int,
-    FOREIGN KEY (book_id) as book(id),
-    FOREIGN KEY (users_id_id) as users_id(id)
+    FOREIGN KEY (book_id) REFERENCES book(id),
+    FOREIGN KEY (users_id) REFERENCES users(id)
 );
 
 

@@ -18,8 +18,7 @@ class UserController {
         // $confirmPassword = $postData['confirm_password'];
      
 
-        // Basic form validation...
-        // ...
+        // add form validation here 
 
         // Create a Users object
         $user = new User($fullname, $lastname, $email, $phone,$password);
@@ -30,7 +29,6 @@ class UserController {
         // Call the createUser method in UserMethods to handle SQL logic
         $result = $userMethods->createUser($user);
 
-        // Handle the result of user creation
         if ($result) {
             // User created successfully
             return true;
@@ -40,37 +38,7 @@ class UserController {
         }
     }
 
-    // public function loginUser($email, $password) {
-    //     // Instantiate the UserDAO
-    //     $userDAO = new UserDAO();
-
-    //     // Get user details by email
-    //     $user = $userDAO->getUserByEmail($email);
-
-    //     var_dump($user);
-
-    //     if (password_verify($password, $user->getPassword())) {
-
-    //         echo "waaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-
-    //         // Password is correct
-    //         // Start a session
-    //         session_start();
-
-    //         // Store user data in session
-    //         $_SESSION['user_id'] = $user->getId();
-    //         $_SESSION['fullname'] = $user->getFullName();
-    //         $_SESSION['email'] = $user->getEmail();
-    //         $_SESSION['role'] = $userDAO->getUserRole($user->getId());
-
-    //         // Redirect to the user's dashboard or desired page
-    //         header('Location: dashboard.php');
-    //         exit();
-    //     } else {
-    //         echo "didn't work";
-    //         exit();
-    //     }
-    // }
+   
     public function loginUser($email, $password) {
         // Instantiate UserDAO
         $userDAO = new UserDAO();
