@@ -114,7 +114,7 @@ class UserDAO {
                         $row['password']
                     );
                     $user->id = $row['id']; // Set the user ID
-                    $user->role = $row['role']; // Set the role directly
+                    $user->setRole($row['role']); // Set the role directly
         
                     $users[] = $user;
                 }

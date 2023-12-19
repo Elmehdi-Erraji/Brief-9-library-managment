@@ -86,10 +86,7 @@ $users = $userController->getUsers();
 
 
                         <div class="row">
-                       <?php 
-                       var_dump($users);
-                       
-                       ?>
+                      
 
                             <div class="col-xl-8">
                                 <!-- Todo-->
@@ -134,11 +131,8 @@ $users = $userController->getUsers();
                                                 <td><?php echo $user->getLastname(); ?></td>
                                                 <td><?php echo $user->getEmail(); ?></td>
                                                 <td><?php echo $user->getPhone(); ?></td>
-                                                <td>
-                                                    <?php foreach ($user->getRole() as $role) : ?>
-                                                        <span class="badge"><?php echo $role; ?></span>
-                                                    <?php endforeach; ?>
-                                                </td>
+                                                <td><?php echo $user->getrole(); ?></td>
+                                               
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
