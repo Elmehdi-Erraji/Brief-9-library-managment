@@ -89,7 +89,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                        <form action="../controller/userAdd.php" method="POST" id="addUserForm">
+                                        <form action="../../app/controllers/UserController.php" method="POST" id="addUserForm">
                                                 <!-- User Name -->
                                                 <div class="mb-3">
                                                     <label for="name" class="form-label">First Name</label>
@@ -122,8 +122,7 @@
                                                     <label for="user_role" class="form-label">User Role</label>
                                                     <select class="form-select" id="user_role" name="user_role">
                                                         <option value="1">Admin</option>
-                                                        <option value="2">Manager</option>
-                                                        <option value="3">Client</option>
+                                                        <option value="2">Client</option>
                                                         <!-- Add more options if needed -->
                                                     </select>
                                                     <span class="error" id="userRoleError">
@@ -158,7 +157,7 @@
                                                     </span>
                                                 </div>
 
-                                                <button type="submit" id="submitButton" class="btn btn-primary" name="submit">Submit</button>
+                                                <button type="submit" id="submitButton" class="btn btn-primary" name="addUser">Submit</button>
                                             </form>
                     
                                             </div> 

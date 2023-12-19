@@ -10,12 +10,13 @@ use App\database\db_conn;
 class UserController {
     public function createUser($postData) {
         // Retrieve form data
-        $fullname = $postData['username'];
-        $lastname = $postData['last-name'];
-        $email = $postData['email'];
-        $phone = $postData['phone'];
-        $password = $postData['password'];
-        // $confirmPassword = $postData['confirm_password'];
+        $fullname = $_POST['first-name'] ?? '';
+        $lastname = $_POST['last-name'] ?? '';
+        $email = $_POST['email'] ?? '';
+        $phone = $_POST['phone'] ?? '';
+        $password = $_POST['password'] ?? '';
+        // $confirmPassword = $_POST['confirmPassword'] ?? '';
+        $userRole = $_POST['user_role'] ?? '';
      
 
         // add form validation here 
@@ -80,6 +81,27 @@ class UserController {
         $users = UserDAO::getAllUsers();
         return $users;
     }
+
+
+
+
+
+    public function addUser($postData) {
+        $fullname = $postData['first-name'] ?? '';
+        $lastname = $postData['last-name'] ?? '';
+        $email = $postData['email'] ?? '';
+        $phone = $postData['phone'] ?? '';
+        $password = $postData['password'] ?? '';
+        $role = $postData['user_role'] ?? ''; // Assuming 'user_role' corresponds to the role ID
+
+        $user = new User($fullname, $lastname, $email, $phone, $password);
+        $user->setRole($role); // Set user role
+        $userDAO = new UserDAO();
+
+        $result = $userDAO->addUser($user);
+
+        return $result;
+    }
 }
 
 
@@ -89,18 +111,19 @@ class UserController {
 
 
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Instantiate the UserController
     $userController = new UserController();
+    $result = $userController->createUser($_POST);
 
-    // Call the loginUser method in UserController
-    $userController->loginUser($email, $password);
+    if ($result) {
+        header('Location: /Brief-9-library-managment/views/auth/login.php');
+        exit();
+    } else {
+        echo "Something went wrong.";
+        exit();
+    }
 }
-
 
 
 
@@ -195,5 +218,43 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
         }
     } else {
         echo "User ID is missing.";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addUser'])) {
+    // Instantiate the UserController
+    $userController = new UserController();
+
+    // Call the addUser method in UserController
+    $result = $userController->addUser($_POST);
+
+    if ($result) {
+        // User added successfully
+        // Redirect to user list or wherever appropriate
+        header("Location: /Brief-9-library-managment/views/admin/user-list.php");
+        exit();
+    } else {
+        // Failed to add user
+        // Handle error
+        echo "Failed to add user.";
     }
 }

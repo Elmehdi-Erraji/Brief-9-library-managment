@@ -98,7 +98,8 @@ $users = $userController->getUsers();
                                                 <a href="#" data-bs-toggle="remove"><i class="ri-close-line"></i></a>
                                             </div> 
                                             <a href="user-add.php"><button type="button" class="btn btn-info">Add a new User</button></a>  
-
+                                            <br>
+                                            <br>
                                             <div class="app-search d-none d-lg-block">
                                             <form style="width: 40%;" id="searchForm">
                                             <div class="input-group">
