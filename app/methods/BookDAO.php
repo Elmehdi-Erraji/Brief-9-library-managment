@@ -31,4 +31,53 @@ class BookDAO {
 
         return $success;
     }
+
+    public static function getAllBooks() {
+        $connection = db_conn::getConnection();
+        $books = [];
+    
+        $query = "SELECT * from book";
+    
+        $result = mysqli_query($connection, $query);
+    
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $book = new Book(
+                    $row['title'],
+                    $row['author'],
+                    $row['genre'],
+                    $row['description'],
+                    $row['publication_year'],
+                    $row['totalCopies'],
+                    $row['availableCopies']
+                );
+                $book->setId($row['id']) ; // Set the user ID
+                
+    
+                $books[] = $book;
+            }
+            mysqli_free_result($result);
+        }
+    
+        return $books;
+    }
+
+
+    public function deleteBookById($userId) {
+        $connection = db_conn::getConnection();
+
+        // Delete the user from the users table
+        $deleteBookQuery = "DELETE FROM book WHERE id = $userId";
+        $stmtBook = $connection->query($deleteBookQuery);
+
+        // Check if both delete operations were successful
+        if ($stmtBook) {
+            return true; // Deletion successful
+        } else {
+            return false; // User not found or deletion failed
+        }
+    }
+
+
+
 }

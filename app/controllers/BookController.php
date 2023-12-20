@@ -26,6 +26,11 @@ class BookController {
         return $result;
             
     }
+
+    public function getBooks() {
+        $books = BookDAO::getAllBooks();
+        return $books;
+    }
 }
 
 
@@ -59,3 +64,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addBook'])) {
         echo "Failed to add user.";
     }
 }
+
+//deleting php logic
+
+if (isset($_GET['action']) && $_GET['action'] === 'delete') {
+    if (isset($_GET['book_id'])) {
+        $bookId = $_GET['book_id'];
+        
+        // Load required UserDAO file
+
+        // Instantiate UserDAO to perform the deletion
+        $bookDAO = new BookDAO();
+        
+        // Call the deleteUserById method in UserDAO
+        $deleted = $bookDAO->deleteBookById($bookId);
+
+        // Redirect back to user list
+        if ($deleted) {
+            header('Location: /Brief-9-library-managment/views/admin/book-list.php');
+            exit();
+        } else {
+            // Handle deletion failure
+            echo "Failed to delete the book.";
+        }
+    } else {
+        echo "Book ID is missing.";
+    }
+} 

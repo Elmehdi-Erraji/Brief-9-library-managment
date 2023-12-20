@@ -1,4 +1,14 @@
+<?php
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+// include '../../app/controllers/UserController.php';
+
+use App\Controllers\BookController;
+
+$bookController = new BookController();
+$books = $bookController->getBooks();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -120,22 +130,26 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                    <?php foreach ($books as $book) : ?>
                                                         <tr>
-                                                            <td>1</td>
-                                                            <td>48 laws of power</td>
-                                                            <td>Robert Green</td>
-                                                            <td>Manipulation</td>
-                                                            <td>A good book</td>
-                                                            <td>26/04/2015</td>
-                                                            <td>50</td>
-                                                            <td><span class="badge bg-info-subtle text-info">50</span></td>
+                                                            <td><?php echo $book->getId(); ?></td>
+                                                            <td><?php echo $book->getTitle(); ?></td>
+                                                            <td><?php echo $book->getAuthor(); ?></td>
+                                                            <td><?php echo $book->getGenre(); ?></td>
+                                                            <td><?php echo strlen($book->getDescription()) > 20 ? substr($book->getDescription(), 0, 20) . '...' : $book->getDescription(); ?></td>
+                                                            <td><?php echo $book->getPublicationYear(); ?></td>
+                                                            <td><?php echo $book->getTotalCopies(); ?></td>
+                                                            <td><span class="badge bg-info-subtle text-info"><?php echo $book->getAvailableCopies(); ?></span></td>
                                                             <td>
-                                                                <a href="" class="btn btn-danger">Delete</a> 
-                                                                <a href="" class="btn btn-info">Update</a> 
+                                                                <a href="../../app/controllers/BookController.php?action=delete&book_id=<?php echo $book->getId(); ?>" class="btn btn-danger">Delete</a> 
+                                                                <a href="book-update.php?book_id=<?php echo $book->getId(); ?>" class="btn btn-info">Update</a> 
                                                             </td>
                                                         </tr>
+                                                        <?php endforeach; ?>
                                                      </tbody>
                                                 </table>
+
+                                                
                                             </div>      
                                         </div>
                                     </div>                           
