@@ -227,6 +227,62 @@ class UserDAO {
         }
 
 
+
+        
+        public function updateUser(User $user) {
+            $connection = db_conn::getConnection();
+        
+            // Extract user attributes
+            $userId = $user->getId();
+            $fullname = $user->getFullname();
+            $lastname = $user->getLastname();
+            $email = $user->getEmail();
+            $phone = $user->getPhone();
+            $roleId = $user->getRole();
+        
+            // Update basic user information (fullname, lastname, email, phone)
+            $basicQuery = "UPDATE users SET fullname=?, lastname=?, email=?, phone=? WHERE id=?";
+            $basicStmt = mysqli_prepare($connection, $basicQuery);
+        
+            if (
+                $basicStmt &&
+                mysqli_stmt_bind_param(
+                    $basicStmt,
+                    "ssssi",
+                    $fullname,
+                    $lastname,
+                    $email,
+                    $phone,
+                    $userId
+                ) &&
+                mysqli_stmt_execute($basicStmt)
+            ) {
+                mysqli_stmt_close($basicStmt);
+            } else {
+                return false; // Failed to update basic user information
+            }
+        
+            // Update user role in the intermediary table roles_users
+            $roleQuery = "UPDATE roles_users SET roles_id=? WHERE users_id=?";
+            $roleStmt = mysqli_prepare($connection, $roleQuery);
+        
+            if (
+                $roleStmt &&
+                mysqli_stmt_bind_param(
+                    $roleStmt,
+                    "ii",
+                    $roleId,
+                    $userId
+                ) &&
+                mysqli_stmt_execute($roleStmt)
+            ) {
+                mysqli_stmt_close($roleStmt);
+                return true; // Successfully updated user role
+            } else {
+                return false; // Failed to update user role
+            }
+        }
+
 }
 
 

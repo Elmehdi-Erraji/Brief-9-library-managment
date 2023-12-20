@@ -259,3 +259,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addUser'])) {
         echo "Failed to add user.";
     }
 }
+
+
+
+
+
+
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUser'])) {
+    // Retrieve form data
+    $userId = $_POST['user_id'] ?? '';
+    $fullname = $_POST['first-name'] ?? '';
+    $lastname = $_POST['last-name'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $phone = $_POST['phone'] ?? '';
+    $role = $_POST['user_role'] ?? '';
+
+    // Perform validation as needed
+
+    // Create an instance of UserDAO
+    $userDAO = new UserDAO();
+
+    // Get the user object by ID to check if it exists
+    $existingUser = $userDAO->getUserById($userId);
+
+    if ($existingUser) {
+        // Update the user object with the new data
+        $existingUser->setFullname($fullname);
+        $existingUser->setLastname($lastname);
+        $existingUser->setEmail($email);
+        $existingUser->setPhone($phone);
+        $existingUser->setRole($role);
+
+        // Update the user in the database
+        $result = $userDAO->updateUser($existingUser);
+
+        if ($result) {
+            // User updated successfully
+            header('Location: /Brief-9-library-managment/views/admin/user-list.php');
+            exit();
+        } else {
+            echo "Failed to update user.";
+        }
+    } else {
+        echo "User not found.";
+    }
+}
+?>

@@ -114,6 +114,7 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
                                     <div class="row">
                                         <div class="col-lg-6">
                                         <form action="../../app/controllers/UserController.php" method="POST" id="updateUserForm">
+                                        <input type="hidden" name="user_id" value="<?php echo $user->getId(); ?>">
                                             <!-- User Name -->
                                             <div class="mb-3">
                                                 <label for="first-name" class="form-label">First Name</label>
