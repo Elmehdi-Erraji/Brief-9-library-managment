@@ -71,12 +71,15 @@ class UserController {
                 exit();
             } else {
                 header('Location: unknown_role.php');
-                exit();
+                exit(); 
+               
             }
         } else {
             // Redirect with error message for invalid credentials
             header('Location: login.php?error=invalid_credentials');
+           
             exit();
+           
         }
     }
 
@@ -111,15 +114,11 @@ class UserController {
 
 
 
-
-
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $userController = new UserController();
-    $result = $userController->loginUser($email, $password);
+    $userController->loginUser($email, $password);
 
 
 }
