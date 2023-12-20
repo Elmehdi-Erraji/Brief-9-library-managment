@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Models\User;
 use App\Methods\UserDAO;
-use App\database\db_conn;
+// use App\database\db_conn;
 
 class UserController {
     public function createUser($postData) {
@@ -128,36 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Simple routing logic
+// Register form handling
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
     // Instantiate the UserController
     $userController = new UserController();
@@ -178,24 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//deleting php logic
 
 if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     if (isset($_GET['user_id'])) {
@@ -239,7 +193,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 
 
 
-
+//User add logic
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addUser'])) {
     // Instantiate the UserController
@@ -263,11 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addUser'])) {
 
 
 
-
-
-
-
-
+//Users update handling 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUser'])) {
     // Retrieve form data
     $userId = $_POST['user_id'] ?? '';

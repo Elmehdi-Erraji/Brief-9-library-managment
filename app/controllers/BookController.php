@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Controllers;
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use App\Models\Book;
+use App\Methods\BookDAO;
+
+class BookController {
+    public function addBook($postData) { 
+        $title = $postData['title'] ?? '';
+        $author = $postData['author'] ?? '';
+        $genre = $postData['genre'] ?? '';
+        $description = $postData['description'] ?? '';
+        $publicationYear = $postData['publicationYear'] ?? '';
+        $totalCopies = $postData['totalCopies'] ?? 0;
+        $availableCopies = $postData['availableCopies'] ?? 0;
+
+        $book = new Book($title, $author, $genre, $description, $publicationYear, $totalCopies, $availableCopies);
+
+        $bookDAO = new BookDAO();       
+
+               // Call the createBook method in BookDAO to handle SQL logic
+         $result = $bookDAO->createBook($book);
+       
+        return $result;
+            
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//User add logic
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addBook'])) {
+    // Instantiate the UserController
+    $bookController = new BookController();
+
+    // Call the addUser method in UserController
+    $result = $bookController->addBook($_POST);
+
+    if ($result) {
+        // User added successfully
+        // Redirect to user list or wherever appropriate
+        header("Location: /Brief-9-library-managment/views/admin/book-list.php");
+        exit();
+    } else {
+        // Failed to add user
+        // Handle error
+        echo "Failed to add user.";
+    }
+}

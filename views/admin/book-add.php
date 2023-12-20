@@ -89,75 +89,58 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                        <form action="../../app/controllers/UserController.php" method="POST" id="addUserForm">
+                                        <form action="../../app/controllers/BookController.php" method="POST" id="addUserForm">
                                                 <!-- User Name -->
-                                                <div class="mb-3">
-                                                    <label for="name" class="form-label">First Name</label>
-                                                    <input type="text" id="name" class="form-control" name="first-name" placeholder="First Name">
-                                                    <span id="nameError" class="error">
-                                                    </span>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="name" class="form-label">Last Name</label>
-                                                    <input type="text" id="name" class="form-control" name="last-name" placeholder="Last Name">
-                                                    <span id="nameError" class="error">
-                                                    </span>
-                                                </div>
-                                               
-                                                <!-- Email -->
-                                                <div class="mb-3">
-                                                    <label for="email" class="form-label">Email</label>
-                                                    <input type="email" id="email" name="email" class="form-control" placeholder="Email">
-                                                    <span id="emailError" class="error">
-                                                    </span>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="name" class="form-label">phone</label>
-                                                    <input type="phone" id="name" class="form-control" name="phone" placeholder="Phone Number">
-                                                    <span id="nameError" class="error">
-                                                    </span>
-                                                </div>
-                                                <!-- User Role -->
-                                                <div class="mb-3">
-                                                    <label for="user_role" class="form-label">User Role</label>
-                                                    <select class="form-select" id="user_role" name="user_role">
-                                                        <option value="1">Admin</option>
-                                                        <option value="2">Client</option>
-                                                        <!-- Add more options if needed -->
-                                                    </select>
-                                                    <span class="error" id="userRoleError">
-                                                    </span>
-                                                </div>
+                                                  <!-- Title -->
+                                            <div class="mb-3">
+                                                <label for="title" class="form-label">Title</label>
+                                                <input type="text" id="title" class="form-control" name="title" placeholder="Title">
+                                                <span id="titleError" class="error"></span>
+                                            </div>
+                                            
+                                            <!-- Author -->
+                                            <div class="mb-3">
+                                                <label for="author" class="form-label">Author</label>
+                                                <input type="text" id="author" class="form-control" name="author" placeholder="Author">
+                                                <span id="authorError" class="error"></span>
+                                            </div>
+                                            
+                                            <!-- Genre -->
+                                            <div class="mb-3">
+                                                <label for="genre" class="form-label">Genre</label>
+                                                <input type="text" id="genre" class="form-control" name="genre" placeholder="Genre">
+                                                <span id="genreError" class="error"></span>
+                                            </div>
+                                            
+                                            <!-- Description -->
+                                            <div class="mb-3">
+                                                <label for="description" class="form-label">Description</label>
+                                                <textarea id="description" class="form-control" name="description" placeholder="Description"></textarea>
+                                                <span id="descriptionError" class="error"></span>
+                                            </div>
+                                            
+                                            <!-- Publication Year -->
+                                            <div class="mb-3">
+                                                <label for="publicationYear" class="form-label">Publication Year</label>
+                                                <input type="date" id="publicationYear" class="form-control" name="publicationYear">
+                                                <span id="publicationYearError" class="error"></span>
+                                            </div>
+                                            
+                                            <!-- Total Copies -->
+                                            <div class="mb-3">
+                                                <label for="totalCopies" class="form-label">Total Copies</label>
+                                                <input type="number" id="totalCopies" class="form-control" name="totalCopies" placeholder="Total Copies">
+                                                <span id="totalCopiesError" class="error"></span>
+                                            </div>
+                                            
+                                            <!-- Available Copies -->
+                                            <div class="mb-3">
+                                                <label for="availableCopies" class="form-label">Available Copies</label>
+                                                <input type="number" id="availableCopies" class="form-control" name="availableCopies" placeholder="Available Copies">
+                                                <span id="availableCopiesError" class="error"></span>
+                                            </div>
 
-                                          
-
-                                                <!-- Password -->
-                                                <div class="mb-3">
-                                                    <label for="password" class="form-label">Password</label>
-                                                    <div class="input-group input-group-merge">
-                                                        <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password">
-                                                        <div class="input-group-text" data-password="false">
-                                                            <span class="password-eye"></span>
-                                                        </div>
-                                                    </div>
-                                                    <span id="passwordError" class="error">
-                                                    </span>
-                                                </div>
-
-                                                <!-- Confirm Password -->
-                                                <div class="mb-3">
-                                                    <label for="confirmPassword" class="form-label">Confirm password</label>
-                                                    <div class="input-group input-group-merge">
-                                                        <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Enter your password">
-                                                        <div class="input-group-text" data-password="false">
-                                                            <span class="password-eye"></span>
-                                                        </div>
-                                                    </div>
-                                                    <span id="confirmPasswordError" class="error">
-                                                    </span>
-                                                </div>
-
-                                                <button type="submit" id="submitButton" class="btn btn-primary" name="addUser">Submit</button>
+                                                <button type="submit" id="submitButton" class="btn btn-primary" name="addBook">Submit</button>
                                             </form>
                     
                                             </div> 
