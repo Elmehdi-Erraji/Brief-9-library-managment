@@ -1,4 +1,27 @@
+<?php
 
+require_once __DIR__ . '../../../vendor/autoload.php';
+
+// include '../../app/controllers/UserController.php';
+
+use App\Controllers\BookController;
+use App\Methods\BookDAO;
+
+if (isset($_GET['book_id']) && is_numeric($_GET['book_id'])) {
+    $bookId = $_GET['book_id'];
+
+    // Fetch user details by ID using UserDAO method
+    $book = BookDAO::getBookById($bookId);
+
+    if (!$book) {
+        echo "Book not found!";
+        exit();
+    }
+} else {
+    echo "Invalid Book ID!";
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,64 +106,66 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="header-title">Add a new user</h4>
+                                    <h4 class="header-title">Update A Book</h4>
                                     
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-lg-6">
-                                        <form action="../../app/controllers/BookController.php" method="POST" id="addUserForm">
-                                                <!-- User Name -->
+                                        <form action="../../app/controllers/BookController.php" method="POST" id="updateUserForm">
+                                        <input type="hidden" name="book_id" value="<?php echo $book->getId(); ?>">
                                                   <!-- Title -->
                                             <div class="mb-3">
                                                 <label for="title" class="form-label">Title</label>
-                                                <input type="text" id="title" class="form-control" name="title" placeholder="Title">
+                                                <input type="text" id="title" class="form-control" name="title" placeholder="Title" value="<?php echo $book->getTitle(); ?>">
                                                 <span id="titleError" class="error"></span>
                                             </div>
                                             
                                             <!-- Author -->
                                             <div class="mb-3">
                                                 <label for="author" class="form-label">Author</label>
-                                                <input type="text" id="author" class="form-control" name="author" placeholder="Author">
+                                                <input type="text" id="author" class="form-control" name="author" placeholder="Author"value="<?php echo $book->getAuthor(); ?>">
                                                 <span id="authorError" class="error"></span>
                                             </div>
                                             
                                             <!-- Genre -->
                                             <div class="mb-3">
                                                 <label for="genre" class="form-label">Genre</label>
-                                                <input type="text" id="genre" class="form-control" name="genre" placeholder="Genre">
+                                                <input type="text" id="genre" class="form-control" name="genre" placeholder="Genre"value="<?php echo $book->getGenre(); ?>">
                                                 <span id="genreError" class="error"></span>
                                             </div>
                                             
                                             <!-- Description -->
                                             <div class="mb-3">
                                                 <label for="description" class="form-label">Description</label>
-                                                <textarea id="description" class="form-control" name="description" placeholder="Description"></textarea>
+                                              
+                                                <textarea id="description" class="form-control" name="description" placeholder="Description" ><?php echo $book->getDescription(); ?></textarea>
                                                 <span id="descriptionError" class="error"></span>
                                             </div>
                                             
                                             <!-- Publication Year -->
                                             <div class="mb-3">
                                                 <label for="publicationYear" class="form-label">Publication Year</label>
-                                                <input type="date" id="publicationYear" class="form-control" name="publicationYear">
+                                                <input type="date" id="publicationYear" class="form-control" name="publicationYear"value="<?php echo $book->getPublicationYear(); ?>">
                                                 <span id="publicationYearError" class="error"></span>
                                             </div>
                                             
                                             <!-- Total Copies -->
                                             <div class="mb-3">
                                                 <label for="totalCopies" class="form-label">Total Copies</label>
-                                                <input type="number" id="totalCopies" class="form-control" name="totalCopies" placeholder="Total Copies">
+                                                <input type="number" id="totalCopies" class="form-control" name="totalCopies" placeholder="Total Copies"value="<?php echo $book->getTotalCopies(); ?>">
                                                 <span id="totalCopiesError" class="error"></span>
                                             </div>
                                             
                                             <!-- Available Copies -->
                                             <div class="mb-3">
                                                 <label for="availableCopies" class="form-label">Available Copies</label>
-                                                <input type="number" id="availableCopies" class="form-control" name="availableCopies" placeholder="Available Copies">
+                                                <input type="number" id="availableCopies" class="form-control" name="availableCopies" placeholder="Available Copies"value="<?php echo $book->getAvailableCopies(); ?>">
                                                 <span id="availableCopiesError" class="error"></span>
                                             </div>
 
-                                                <button type="submit" id="submitButton" class="btn btn-primary" name="addBook">Submit</button>
+                                                <button type="submit" id="submitButton" class="btn btn-primary" name="ubdateBook">Submit</button>
+                                                <a href="book-list.php"><button type="button" class="btn btn-dark">Back</button></a>
                                             </form>
                     
                                             </div> 

@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addBook'])) {
     }
 }
 
-//deleting php logic
+//deleting a book php logic
 
 if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     if (isset($_GET['book_id'])) {
@@ -91,3 +91,54 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
         echo "Book ID is missing.";
     }
 } 
+
+
+
+
+//updating a book logic 
+//Users update handling 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ubdateBook'])) {
+    // Retrieve form data
+    $bookId = $_POST['book_id'] ?? '';
+    $title = $_POST['title'] ?? '';
+    $author = $_POST['author'] ?? '';
+    $genre = $_POST['genre'] ?? '';
+    $description = $_POST['description'] ?? '';
+    $publicationYear = $_POST['publicationYear'] ?? '';
+    $totalCopies = $_POST['totalCopies'] ?? '';
+    $availableCopies = $_POST['availableCopies'] ?? '';
+
+    // Perform validation and sanitization as needed
+
+    // Create an instance of BookDAO
+    $bookDAO = new BookDAO();
+
+    // Get the book object by ID to check if it exists
+    $existingBook = $bookDAO->getBookById($bookId);
+
+    if ($existingBook) {
+        // Update the book object with the new data
+        $existingBook->setTitle($title);
+        $existingBook->setAuthor($author);
+        $existingBook->setGenre($genre);
+        $existingBook->setDescription($description);
+        $existingBook->setPublicationYear($publicationYear);
+        $existingBook->setTotalCopies($totalCopies);
+        $existingBook->setAvailableCopies($availableCopies);
+
+        // Update the book in the database
+        $result = $bookDAO->updateBook($existingBook);
+
+        if ($result) {
+            // Book updated successfully
+            header('Location: /Brief-9-library-managment/views/admin/book-list.php');
+            exit();
+        } else {
+            echo "Failed to update book.";
+        }
+    } else {
+        echo "Book not found.";
+    }
+
+}
+

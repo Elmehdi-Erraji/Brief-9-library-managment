@@ -80,4 +80,59 @@ class BookDAO {
 
 
 
+    public static function getBookById($bookId) {
+        $connection = db_conn::getConnection();
+        $book = null;
+        
+        $query = "SELECT * FROM book WHERE id = ?";
+                  
+        $stmt = mysqli_prepare($connection, $query);
+        
+        mysqli_stmt_bind_param($stmt, "i", $bookId);
+        mysqli_stmt_execute($stmt);
+        
+        $result = mysqli_stmt_get_result($stmt);
+        
+        if ($result && $row = mysqli_fetch_assoc($result)) {
+            $book = new Book(
+                $row['title'],
+                $row['author'],
+                $row['genre'],
+                $row['description'],
+                $row['publication_year'],
+                $row['totalCopies'],
+                $row['availableCopies']
+            );
+            $book->setId($row['id']) ; // Set the user ID
+        }
+        
+        mysqli_stmt_close($stmt);
+        return $book;
+    }
+
+    public function updateBook(Book $book) {
+        $connection = db_conn::getConnection();
+    
+        // Extract book attributes
+        $bookId = $book->getId();
+        $title = $book->getTitle();
+        $author = $book->getAuthor();
+        $genre = $book->getGenre();
+        $description = $book->getDescription();
+        $publicationYear = $book->getPublicationYear();
+        $totalCopies = $book->getTotalCopies();
+        $availableCopies = $book->getAvailableCopies();
+    
+        $query = "UPDATE book SET title=?, author=?, genre=?, description=?, publication_year=?, totalCopies=?, availableCopies=? WHERE id=?";
+        $stmt = mysqli_prepare($connection, $query);
+    
+        if ( $stmt && mysqli_stmt_bind_param( $stmt, "sssssiii",$title,$author,$genre, $description,$publicationYear,$totalCopies,$availableCopies, $bookId) && mysqli_stmt_execute($stmt)) 
+        {
+            mysqli_stmt_close($stmt);
+            return true; // Successfully updated book
+        } else {
+            return false; // Failed to update book
+        }
+    }
+
 }

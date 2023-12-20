@@ -83,7 +83,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="header-title">Add a new user</h4>
+                                    <h4 class="header-title">Add a new Book</h4>
                                     
                                 </div>
                                 <div class="card-body">
