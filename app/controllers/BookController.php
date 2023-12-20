@@ -99,14 +99,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 //Users update handling 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['ubdateBook'])) {
     // Retrieve form data
-    $bookId = $_POST['book_id'] ?? '';
-    $title = $_POST['title'] ?? '';
-    $author = $_POST['author'] ?? '';
-    $genre = $_POST['genre'] ?? '';
-    $description = $_POST['description'] ?? '';
-    $publicationYear = $_POST['publicationYear'] ?? '';
-    $totalCopies = $_POST['totalCopies'] ?? '';
-    $availableCopies = $_POST['availableCopies'] ?? '';
+    $bookId = $_POST['book_id'];
+    $title = $_POST['title'];
+    $author = $_POST['author'];
+    $genre = $_POST['genre'];
+    $description = $_POST['description'];
+    $publicationYear = $_POST['publicationYear'];
+    $totalCopies = $_POST['totalCopies'];
+    $availableCopies = $_POST['availableCopies'];
 
     // Perform validation and sanitization as needed
 
