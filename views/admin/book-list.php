@@ -116,6 +116,7 @@
                                                             <th>Publication Year</th>
                                                             <th>Total Copies</th>
                                                             <th>Available Copies</th>
+                                                            <th>Actions</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -128,6 +129,10 @@
                                                             <td>26/04/2015</td>
                                                             <td>50</td>
                                                             <td><span class="badge bg-info-subtle text-info">50</span></td>
+                                                            <td>
+                                                                <a href="" class="btn btn-danger">Delete</a> 
+                                                                <a href="" class="btn btn-info">Update</a> 
+                                                            </td>
                                                         </tr>
                                                      </tbody>
                                                 </table>

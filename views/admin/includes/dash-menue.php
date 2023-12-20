@@ -1,6 +1,3 @@
-   
-
-   
 <!-- ========== Left Sidebar Start ========== -->
    <div class="leftside-menu">
 
@@ -67,10 +64,10 @@
             <div class="collapse" id="sidebarProjects">
                 <ul class="side-nav-second-level">
                     <li>
-                        <a href="books-add.php">Add a Book</a>
+                        <a href="book-add.php">Add a Book</a>
                     </li>
                     <li>
-                        <a href="books-list.php">Books List</a>
+                        <a href="book-list.php">Books List</a>
                     </li>
                 </ul>
             </div>
