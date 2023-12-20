@@ -23,17 +23,11 @@ if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
 }
  
 
-  if (!isset($_SESSION['user_id'])) {
-    // Redirect to the login page if the user is not logged in
-    header('Location: /Brief-9-library-managment/views/auth/login.php');
-    exit();
-}
-
-if (isset($_SESSION['role_id']) && $_SESSION['role_id'] != 1) {
-    // Redirect to the user dashboard if the user's role ID is not an admin
-    header('Location: /Brief-9-library-managment/views/user/dashboard.php');
-    exit();
-}
+    if (!isset($_SESSION['user_id']) == 1) {
+        // Redirect to login page or handle unauthorized access
+        header('Location: /Brief-9-library-managment/views/auth/login.php');
+        exit();
+    }
 
 ?>
 

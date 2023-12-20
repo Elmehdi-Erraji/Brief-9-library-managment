@@ -283,6 +283,32 @@ class UserDAO {
             }
         }
 
+
+        public function countUsers() {
+            $query = "SELECT COUNT(*) as user_count FROM users"; 
+            $result = mysqli_query($this->db, $query);
+            $data = mysqli_fetch_assoc($result);
+    
+            return $data['user_count'];
+        }
+    
+        public function countBooks() {
+            $query = "SELECT COUNT(*) as book_count FROM book";
+            $result = mysqli_query($this->db, $query);
+            $data = mysqli_fetch_assoc($result);
+    
+            return $data['book_count'];
+        }
+
+        public function countReservations() {
+            $query = "SELECT COUNT(*) as reservation_count FROM reservation";
+            $result = mysqli_query($this->db, $query);
+            $data = mysqli_fetch_assoc($result);
+    
+            return $data['reservation_count'];
+        }
+
+
 }
 
 

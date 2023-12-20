@@ -109,6 +109,16 @@ class UserController {
         return $result;
     }
 
+    public function showData() {
+        $model = new UserDAO();
+        $userCount = $model->countUsers();
+        $bookCount = $model->countBooks();
+        $reservationcount = $model->countReservations();
+
+        // Include the view file and pass the variables
+        return [$userCount, $bookCount,$reservationcount];
+        }
+
   
 }
 

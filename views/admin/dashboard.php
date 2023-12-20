@@ -1,5 +1,16 @@
 
 <?php
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+// include '../../app/controllers/UserController.php';
+
+use App\Controllers\UserController;
+
+
+$data = new UserController();
+list($userCount, $bookCount,$reservationcount) = $data->showData();
+
+
 session_start();
     if (!isset($_SESSION['user_id'])) {
         // Redirect to login page or handle unauthorized access
@@ -91,7 +102,7 @@ session_start();
                                             <i class="ri-group-2-line widget-icon"></i>
                                         </div>
                                         <h6 class="text-uppercase mt-0" title="Customers">Users</h6>
-                                        <h2 class="my-2">15</h2>
+                                        <h2 class="my-2"><?php echo $userCount;?></h2>
                                       
                                     </div>
                                 </div>
@@ -104,7 +115,7 @@ session_start();
                                             <i class="ri-shopping-basket-line widget-icon"></i>
                                         </div>
                                         <h6 class="text-uppercase mt-0" title="Customers">Books</h6>
-                                        <h2 class="my-2">753</h2>
+                                        <h2 class="my-2"><?php echo $bookCount; ?></h2>
                                        
                                     </div>
                                 </div>
@@ -116,7 +127,7 @@ session_start();
                                             <i class="ri-wallet-2-line widget-icon"></i>
                                         </div>
                                         <h6 class="text-uppercase mt-0" title="Customers">Reservations</h6>
-                                        <h2 class="my-2">7</h2>
+                                        <h2 class="my-2"><?php echo $reservationcount;?></h2>
                                         
                                     </div>
                                 </div>
