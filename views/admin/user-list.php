@@ -136,8 +136,9 @@ $users = $userController->getUsers();
                                                 <td><?php echo $user->getPhone(); ?></td>
                                                 <td><?php echo $user->getrole(); ?></td>
                                                 <td>
-                                                <a href="../../app/controllers/UserController.php?action=delete&user_id=<?php echo $user->getId(); ?>" class="btn btn-danger">Delete</a>                                                <button type="button" class="btn btn-info">Update</button>
-                                                </td>
+                                                <a href="../../app/controllers/UserController.php?action=delete&user_id=<?php echo $user->getId(); ?>" class="btn btn-danger">Delete</a> 
+                                                <a href="user-update.php?user_id=<?php echo $user->getId(); ?>" class="btn btn-info">Update</a> 
+                                            </td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

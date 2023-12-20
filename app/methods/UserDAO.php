@@ -71,27 +71,6 @@ class UserDAO {
             }
         }
 
-        public function getUserRole($userId) {
-            $query = "SELECT roles_id FROM roles_users WHERE users_id = ?";
-            $stmt = mysqli_prepare($this->db, $query);
-            mysqli_stmt_bind_param($stmt, "i", $userId);
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
-        
-            if (!$result) {
-                // Handle SQL error (example: return null or log the error)
-                return null;
-            }
-        
-            $role = mysqli_fetch_assoc($result);
-        
-            if (!$role) {
-                // Handle role not found (example: return null or log the issue)
-                return null;
-            }
-        
-            return $role['roles_id']; // Assuming the roles_id is the role identifier
-        }
 
         public static function getAllUsers() {
             $connection = db_conn::getConnection();
@@ -124,6 +103,59 @@ class UserDAO {
             return $users;
         }
 
+        public function getUserRole($userId) {
+            $query = "SELECT roles_id FROM roles_users WHERE users_id = ?";
+            $stmt = mysqli_prepare($this->db, $query);
+            mysqli_stmt_bind_param($stmt, "i", $userId);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+        
+            if (!$result) {
+                // Handle SQL error (example: return null or log the error)
+                return null;
+            }
+        
+            $role = mysqli_fetch_assoc($result);
+        
+            if (!$role) {
+                // Handle role not found (example: return null or log the issue)
+                return null;
+            }
+        
+            return $role['roles_id']; // Assuming the roles_id is the role identifier
+        }
+        public static function getUserById($userId) {
+            $connection = db_conn::getConnection();
+            $user = null;
+            
+            $query = "SELECT u.*, r.name AS role 
+                      FROM users u
+                      LEFT JOIN roles_users ru ON u.id = ru.users_id
+                      LEFT JOIN roles r ON ru.roles_id = r.id
+                      WHERE u.id = ?";
+                      
+            $stmt = mysqli_prepare($connection, $query);
+            
+            mysqli_stmt_bind_param($stmt, "i", $userId);
+            mysqli_stmt_execute($stmt);
+            
+            $result = mysqli_stmt_get_result($stmt);
+            
+            if ($result && $row = mysqli_fetch_assoc($result)) {
+                $user = new User(
+                    $row['fullname'],
+                    $row['lastname'],
+                    $row['email'],
+                    $row['phone'],
+                    $row['password']
+                );
+                $user->id = $row['id'];
+                $user->setRole($row['role']); // Set the role name
+            }
+            
+            mysqli_stmt_close($stmt);
+            return $user;
+        }
 
         public function deleteUserById($userId) {
             $connection = db_conn::getConnection();

@@ -1,3 +1,27 @@
+<?php
+
+require_once __DIR__ . '../../../vendor/autoload.php';
+
+// include '../../app/controllers/UserController.php';
+
+use App\Controllers\UserController;
+use App\Methods\UserDAO;
+
+if (isset($_GET['user_id']) && is_numeric($_GET['user_id'])) {
+    $userId = $_GET['user_id'];
+
+    // Fetch user details by ID using UserDAO method
+    $user = UserDAO::getUserById($userId);
+
+    if (!$user) {
+        echo "User not found!";
+        exit();
+    }
+} else {
+    echo "Invalid user ID!";
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -74,156 +98,68 @@
                         </div>
                         <!-- end page title -->
 
-                        <div class="row">
-                           
-                            <div class="col-xxl-3 col-sm-6">
-                                <div class="card widget-flat text-bg-primary">
-                                    <div class="card-body">
-                                        <div class="float-end">
-                                            <i class="ri-group-2-line widget-icon"></i>
-                                        </div>
-                                        <h6 class="text-uppercase mt-0" title="Customers">Users</h6>
-                                        <h2 class="my-2">15</h2>
-                                      
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xxl-3 col-sm-6">
-                                <div class="card widget-flat text-bg-info">
-                                    <div class="card-body">
-                                        <div class="float-end">
-                                            <i class="ri-shopping-basket-line widget-icon"></i>
-                                        </div>
-                                        <h6 class="text-uppercase mt-0" title="Customers">Books</h6>
-                                        <h2 class="my-2">753</h2>
-                                       
-                                    </div>
-                                </div>
-                            </div> <!-- end col-->
-                            <div class="col-xxl-3 col-sm-6">
-                                <div class="card widget-flat text-bg-purple">
-                                    <div class="card-body">
-                                        <div class="float-end">
-                                            <i class="ri-wallet-2-line widget-icon"></i>
-                                        </div>
-                                        <h6 class="text-uppercase mt-0" title="Customers">Reservations</h6>
-                                        <h2 class="my-2">7</h2>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end col-->
-                        </div>
-
+                     
                     
                         <!-- end row -->
 
                         <div class="row">
                        
-
-                            <div class="col-xl-8">
-                                <!-- Todo-->
-                                <div class="card">
-                                    <div class="card-body p-0">
-                                        <div class="p-3">
-                                            <div class="card-widgets">
-                                                <a data-bs-toggle="collapse" href="#yearly-sales-collapse" role="button" aria-expanded="false" aria-controls="yearly-sales-collapse"><i class="ri-subtract-line"></i></a>
-                                                <a href="#" data-bs-toggle="remove"><i class="ri-close-line"></i></a>
-                                            </div>   
-
-                                            <div class="app-search d-none d-lg-block">
-                                            <form style="width: 40%;" id="searchForm">
-                                            <div class="input-group">
-                                                <input type="search" class="form-control" placeholder="Search..." id="searchInput">
-                                                <span class="ri-search-line search-icon text-muted"></span>
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="header-title">Update A User</h4>
+                                    
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                        <form action="../../app/controllers/UserController.php" method="POST" id="updateUserForm">
+                                            <!-- User Name -->
+                                            <div class="mb-3">
+                                                <label for="first-name" class="form-label">First Name</label>
+                                                <input type="text" id="first-name" class="form-control" name="first-name" placeholder="First Name" value="<?php echo $user->getFullname(); ?>">
+                                                <span id="nameError" class="error"></span>
                                             </div>
+                                            <div class="mb-3">
+                                                <label for="last-name" class="form-label">Last Name</label>
+                                                <input type="text" id="last-name" class="form-control" name="last-name" placeholder="Last Name" value="<?php echo $user->getLastname(); ?>">
+                                                <span id="nameError" class="error"></span>
+                                            </div>
+                                        
+                                            <!-- Email -->
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" id="email" name="email" class="form-control" placeholder="Email" value="<?php echo $user->getEmail(); ?>">
+                                                <span id="emailError" class="error"></span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="phone" class="form-label">Phone</label>
+                                                <input type="phone" id="phone" class="form-control" name="phone" placeholder="Phone Number" value="<?php echo $user->getPhone(); ?>">
+                                                <span id="nameError" class="error"></span>
+                                            </div>
+                                            <!-- User Role -->
+                                            <div class="mb-3">
+                                                <label for="user_role" class="form-label">User Role</label>
+                                                <select class="form-select" id="user_role" name="user_role">
+                                                    <option value="1" <?php echo ($user->getRole() == 'admin') ? 'selected' : ''; ?>>Admin</option>
+                                                    <option value="2" <?php echo ($user->getRole() == 'client') ? 'selected' : ''; ?>>Client</option>
+                                                    <!-- Add more options if needed -->
+                                                </select>
+                                                <span class="error" id="userRoleError"></span>
+                                            </div>
+
+                                            <button type="submit" id="submitButton" class="btn btn-primary" name="updateUser">Submit</button>
+                                            <a href="user-list.php"><button type="button" class="btn btn-dark">Back</button></a>
                                         </form>
+                    
+                                            </div> 
                                         </div>
-                                        </div>
-                                       
-    
-                                        <div id="yearly-sales-collapse" class="collapse show">
-    
-                                        <div class="table-responsive">
-                                                <table class="table table-nowrap table-hover mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Project Name</th>
-                                                            <th>Start Date</th>
-                                                            <th>Due Date</th>
-                                                            <th>Status</th>
-                                                            <th>Assign</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>1</td>
-                                                            <td>Velonic Admin v1</td>
-                                                            <td>01/01/2015</td>
-                                                            <td>26/04/2015</td>
-                                                            <td><span class="badge bg-info-subtle text-info">Released</span></td>
-                                                            <td>Techzaa Studio</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>2</td>
-                                                            <td>Velonic Frontend v1</td>
-                                                            <td>01/01/2015</td>
-                                                            <td>26/04/2015</td>
-                                                            <td><span class="badge bg-info-subtle text-info">Released</span></td>
-                                                            <td>Techzaa Studio</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>Velonic Admin v1.1</td>
-                                                            <td>01/05/2015</td>
-                                                            <td>10/05/2015</td>
-                                                            <td><span class="badge bg-pink-subtle text-pink">Pending</span></td>
-                                                            <td>Techzaa Studio</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>Velonic Frontend v1.1</td>
-                                                            <td>01/01/2015</td>
-                                                            <td>31/05/2015</td>
-                                                            <td><span class="badge bg-purple-subtle text-purple">Work in Progress</span></td>
-                                                            <td>Techzaa Studio</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>5</td>
-                                                            <td>Velonic Admin v1.3</td>
-                                                            <td>01/01/2015</td>
-                                                            <td>31/05/2015</td>
-                                                            <td><span class="badge bg-warning-subtle text-warning">Coming soon</span></td>
-                                                            <td>Techzaa Studio</td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>6</td>
-                                                            <td>Velonic Admin v1.3</td>
-                                                            <td>01/01/2015</td>
-                                                            <td>31/05/2015</td>
-                                                            <td><span class="badge bg-primary-subtle text-primary">Coming soon</span></td>
-                                                            <td>Techzaa Studio</td>
-                                                        </tr>
-    
-                                                        <tr>
-                                                            <td>7</td>
-                                                            <td>Velonic Admin v1.3</td>
-                                                            <td>01/01/2015</td>
-                                                            <td>31/05/2015</td>
-                                                            <td><span class="badge bg-danger-subtle text-danger">Cool</span></td>
-                                                            <td>Techzaa Studio</td>
-                                                        </tr>
-    
-                                                    </tbody>
-                                                </table>
-                                            </div>      
-                                        </div>
-                                    </div>                           
-                                </div> <!-- end card-->
-                            </div> <!-- end col-->
+                                    
+                                    </div> 
+                                </div> 
+                            </div>
+                        </div>
+                            <!-- end col-->
                         </div>
                         <!-- end row -->
 
