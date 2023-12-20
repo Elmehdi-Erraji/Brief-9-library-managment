@@ -53,12 +53,15 @@ class UserController {
 
             // Set session variables
             $_SESSION['user_id'] = $user['id'];
+            
             $_SESSION['fullname'] = $user['fullname'];
             $_SESSION['email'] = $user['email'];
 
             // Get user's role
             $role = $userDAO->getUserRole($user['id']);
 
+            $_SESSION['role_id'] = $role;
+           
             // Redirect based on user's role
             if ($role === 1) {
                 header('Location: /Brief-9-library-managment/views/admin/dashboard.php');
@@ -112,18 +115,13 @@ class UserController {
 
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
     $userController = new UserController();
-    $result = $userController->createUser($_POST);
+    $result = $userController->loginUser($email, $password);
 
-    if ($result) {
-        header('Location: /Brief-9-library-managment/views/auth/login.php');
-        exit();
-    } else {
-        echo "Something went wrong.";
-        exit();
-    }
+
 }
 
 
@@ -150,7 +148,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signup'])) {
 
 
 //deleting php logic
-
 if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     if (isset($_GET['user_id'])) {
         $userId = $_GET['user_id'];
@@ -179,22 +176,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //User add logic
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addUser'])) {
     // Instantiate the UserController
     $userController = new UserController();
@@ -213,8 +195,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addUser'])) {
         echo "Failed to add user.";
     }
 }
-
-
 
 
 //Users update handling 

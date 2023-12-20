@@ -43,7 +43,7 @@
                                         <form action="../../app/controllers/UserController.php" method="post">
                                             <div class="mb-3">
                                                 <label for="fullname" class="form-label">First Name</label>
-                                                <input class="form-control" type="text" name="username" id="first-name" placeholder="Enter your first name" required="">
+                                                <input class="form-control" type="text" name="first-name" id="first-name" placeholder="Enter your first name" required="">
                                             </div>
                                             <div class="mb-3">
                                                 <label for="fullname" class="form-label">First Name</label>
