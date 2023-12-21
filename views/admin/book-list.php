@@ -15,6 +15,11 @@ $books = $bookController->getBooks();
         header('Location: /Brief-9-library-managment/views/auth/login.php');
         exit();
     }
+    if (isset($_SESSION['role_id']) && $_SESSION['role_id'] != 1) {
+        // Redirect to the user dashboard if the user's role ID is not an admin
+        header('Location: /Brief-9-library-managment/views/user/dashboard.php');
+        exit();
+    }
 
 ?>
 <!DOCTYPE html>

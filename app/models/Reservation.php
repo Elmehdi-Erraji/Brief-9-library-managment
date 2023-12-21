@@ -3,15 +3,14 @@
 namespace app\models;
 class Reservation {
     private $id;
-    private $description;
     private $reservationDate;
     private $returnDate;
     private $isReturned;
     private $bookId;
     private $userId;
 
-    public function __construct($description, $reservationDate, $returnDate, $bookId, $userId) {
-        $this->description = $description;
+    public function __construct($reservationDate, $returnDate, $bookId, $userId) {
+       
         $this->reservationDate = $reservationDate;
         $this->returnDate = $returnDate;
         $this->isReturned = 0; // 0 represents 'not returned'
@@ -24,14 +23,7 @@ class Reservation {
         return $this->id;
     }
 
-    public function getDescription() {
-        return $this->description;
-    }
-
-    public function setDescription($description) {
-        $this->description = $description;
-    }
-
+ 
     public function getReservationDate() {
         return $this->reservationDate;
     }

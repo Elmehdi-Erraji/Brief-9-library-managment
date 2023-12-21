@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['user_id']) == 1) {
+if (!isset($_SESSION['user_id'])) {
     // Redirect to login page or handle unauthorized access
     header('Location: /Brief-9-library-managment/views/auth/login.php');
     exit();
