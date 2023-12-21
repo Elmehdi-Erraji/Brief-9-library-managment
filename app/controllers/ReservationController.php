@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserveButton'])) {
 
     
     if ($added) {
-        header("Location: /success.php");
+        header("Location: /Brief-9-library-managment/views/user/profile.php");
         exit();
     } else {
         echo "Failed to add reservation to the database.";

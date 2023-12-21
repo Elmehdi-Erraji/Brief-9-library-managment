@@ -1,3 +1,20 @@
+<?php 
+
+
+session_start();
+
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use App\Methods\ReservationDAO;
+
+$userId = $_SESSION['user_id'] ;
+
+$reservationDAO = new ReservationDAO(); // Replace ReservationDAO with your actual DAO class
+$reservationCount = $reservationDAO->getNumberOfReservationsForUser($userId);
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" data-layout="topnav" data-topbar-color="dark" data-menu-color="light">
 
@@ -73,7 +90,7 @@
                                         <i class="ri-shopping-basket-line widget-icon"></i>
                                     </div>
                                     <h6 class="text-uppercase mt-0" title="Customers">My Reservations</h6>
-                                    <h2 class="my-2">5</h2>
+                                    <h2 class="my-2"><?php echo $reservationCount; ?></h2>
                                   
                                 </div>
                             </div>
