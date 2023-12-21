@@ -156,6 +156,7 @@ class UserDAO {
             mysqli_stmt_close($stmt);
             return $user;
         }
+        
 
         public function deleteUserById($userId) {
             $connection = db_conn::getConnection();

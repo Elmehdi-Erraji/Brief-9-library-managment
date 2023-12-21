@@ -31,6 +31,7 @@ class BookController {
         $books = BookDAO::getAllBooks();
         return $books;
     }
+
 }
 
 

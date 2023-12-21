@@ -1,5 +1,10 @@
 <?php
-
+session_start();
+if (!isset($_SESSION['user_id']) == 1) {
+    // Redirect to login page or handle unauthorized access
+    header('Location: /Brief-9-library-managment/views/auth/login.php');
+    exit();
+}
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 // include '../../app/controllers/UserController.php';
@@ -92,7 +97,7 @@ $users = $userController->getUsers();
                             <!-- Todo-->
                             <div class="card">
                                 <div class="card-body p-0">
-                                    
+
                                     <div class="p-3">
                                         <div class="card-widgets">
                                             <a data-bs-toggle="collapse" href="#yearly-sales-collapse" role="button" aria-expanded="false" aria-controls="yearly-sales-collapse"><i class="ri-subtract-line"></i></a>
