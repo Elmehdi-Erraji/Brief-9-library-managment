@@ -2,7 +2,7 @@
 
 namespace app\models;
 class Reservation {
-    private $id;
+    public $id;
     private $reservationDate;
     private $returnDate;
     private $isReturned;

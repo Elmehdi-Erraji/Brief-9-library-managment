@@ -24,6 +24,15 @@ class ReservationController{
     
         return $added;
     }
+
+    public function getReservationsForUser($userId) {
+        $usersReservations = ReservationDAO::getReservationsForUser($userId);
+        return $usersReservations;
+    }
+    // public function getReservations_admin() {
+    //     $allReservation = ReservationDAO::getAllReservations_admin();
+    //     return $allReservation;
+    // }
 }
 
 
@@ -59,4 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserveButton'])) {
     // echo "<p>Reservation Date: " . $reservation->getReservationDate() . "</p>";
     // echo "<p>Return Date: " . $reservation->getReturnDate() . "</p>";
 
+}
+
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['reservation_id'])) {
+    $reservationId = $_GET['reservation_id'];
+
+    $reservationDAO = new ReservationDAO();
+    $reservationDAO->deleteReservation($reservationId);
+    
+    // Redirect back to the reservations page after deletion
+    header("Location: /Brief-9-library-managment/views/user/profile.php");
+    exit();
 }

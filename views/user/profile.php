@@ -1,13 +1,19 @@
-<?php 
+<?php
 session_start();
 
 require_once __DIR__ . '/../../vendor/autoload.php';
+
 use App\Controllers\ReservationController;
 use App\Methods\ReservationDAO;
-$userId = $_SESSION['user_id'] ;
 
-$reservationDAO = new ReservationDAO(); // Replace ReservationDAO with your actual DAO class
+$userId = $_SESSION['user_id'];
+
+$reservationDAO = new ReservationDAO();
 $reservationCount = $reservationDAO->getNumberOfReservationsForUser($userId);
+
+
+$reservationController = new ReservationController();
+$reservations = $reservationController->getReservationsForUser($userId);
 ?>
 
 
@@ -49,7 +55,7 @@ $reservationCount = $reservationDAO->getNumberOfReservationsForUser($userId);
         <!-- ========== Topbar End ========== -->
         <?php include 'includes/dash-menue.php' ?>
         <!-- ========== Horizontal Menu Start ========== -->
-        
+
         <!-- ========== Horizontal Menu End ========== -->
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
@@ -78,7 +84,7 @@ $reservationCount = $reservationDAO->getNumberOfReservationsForUser($userId);
                     <!-- end page title -->
 
                     <div class="row">
-                       
+
                         <div class="col-xxl-3 col-sm-6">
                             <div class="card widget-flat text-bg-info">
                                 <div class="card-body">
@@ -87,7 +93,7 @@ $reservationCount = $reservationDAO->getNumberOfReservationsForUser($userId);
                                     </div>
                                     <h6 class="text-uppercase mt-0" title="Customers">My Reservations</h6>
                                     <h2 class="my-2"><?php echo $reservationCount; ?></h2>
-                                  
+
                                 </div>
                             </div>
                         </div> <!-- end col-->
@@ -95,149 +101,152 @@ $reservationCount = $reservationDAO->getNumberOfReservationsForUser($userId);
                         <!-- end col-->
                     </div>
 
-                 
+
                     <!-- end row -->
                     <div class="content-page">
-                <div class="content">
+                        <div class="content">
 
-                    <!-- Start Content-->
-                    <div class="container-fluid">
+                            <!-- Start Content-->
+                            <div class="container-fluid">
 
-                        <!-- start page title -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="page-title-box">
-                                    <div class="page-title-right">
-                                        <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);"> </a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
-                                            <li class="breadcrumb-item active">Welcome!</li>
-                                        </ol>
-                                    </div>
-                                    <h4 class="page-title">Welcome!</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end page title -->
+                                <!-- start page title -->
+                                
+                                <!-- end page title -->
 
-                       
-                    
-                 
 
-                        <div class="row">
-                       
 
-                            <div class="col-xl-8">
-                                <!-- Todo-->
-                                <div class="card">
-                                    <div class="card-body p-0">
-                                        <div class="p-3">
-                                            <div class="card-widgets">
-                                                <a data-bs-toggle="collapse" href="#yearly-sales-collapse" role="button" aria-expanded="false" aria-controls="yearly-sales-collapse"><i class="ri-subtract-line"></i></a>
-                                                <a href="#" data-bs-toggle="remove"><i class="ri-close-line"></i></a>
-                                            </div>   
 
-                                            <div class="app-search d-none d-lg-block">
-                                            <form style="width: 40%;" id="searchForm">
-                                            <div class="input-group">
-                                                <input type="search" class="form-control" placeholder="Search..." id="searchInput">
-                                                <span class="ri-search-line search-icon text-muted"></span>
+
+                                <div class="row">
+
+
+                                    <div class="col-xl-8">
+                                        <!-- Todo-->
+                                        <div class="card">
+                                            <div class="card-body p-0">
+                                                <div class="p-3">
+                                                    <div class="card-widgets">
+                                                        <a data-bs-toggle="collapse" href="#yearly-sales-collapse" role="button" aria-expanded="false" aria-controls="yearly-sales-collapse"><i class="ri-subtract-line"></i></a>
+                                                        <a href="#" data-bs-toggle="remove"><i class="ri-close-line"></i></a>
+                                                    </div>
+
+                                                    <div class="app-search d-none d-lg-block">
+                                                        <form style="width: 40%;" id="searchForm">
+                                                            <div class="input-group">
+                                                                <input type="search" class="form-control" placeholder="Search..." id="searchInput">
+                                                                <span class="ri-search-line search-icon text-muted"></span>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+
+                                                <div id="yearly-sales-collapse" class="collapse show">
+
+                                                    <div class="table-responsive">
+                                                        <table class="table table-nowrap table-hover mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Book Title</th>
+                                                                    <th>Reservation date</th>
+                                                                    <th>Return Date</th>
+                                                                    <th>Status</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+
+                                                            <tbody>
+                                                                <?php foreach ($reservations as $reservation) : ?>
+                                                                    <tr>
+
+                                                                        <td><?php echo $reservation->getId(); ?></td>
+                                                                        <td><?php echo $reservation->getBookId(); ?></td>
+                                                                        <td><?php echo $reservation->getReservationDate(); ?></td>
+                                                                        <td><?php echo $reservation->getReturnDate(); ?></td>
+                                                                        <td>
+                                                                            <?php
+                                                                            $returnStatus = $reservation->getIsReturned();
+                                                                            if ($returnStatus === 1) {
+                                                                                echo '<span class="badge bg-pink-subtle text-pink">Not Returned</span>';
+                                                                            } else if ($returnStatus === 0) {
+                                                                                echo '<span class="badge bg-info-subtle text-info">Returned</span>';
+                                                                            } else {
+                                                                                echo '<span class="badge bg-warning">Unknown Status</span>';
+                                                                            }
+                                                                            ?>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <a href="../../app/controllers/ReservationController.php?action=delete&reservation_id=<?php echo $reservation->getId(); ?>" class="btn btn-danger">Delete</a>
+                                                                            <a href="reservation-update.php?reservation_id=<?php echo $reservation->getId(); ?>" class="btn btn-info">Update</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                <?php endforeach; ?>
+                                                            </tbody>
+                                                        </table>
+
+
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </form>
-                                        </div>
-                                        </div>
-                                       
-    
-                                        <div id="yearly-sales-collapse" class="collapse show">
-    
-                                        <div class="table-responsive">
-                                                <table class="table table-nowrap table-hover mb-0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>ID</th>
-                                                            <th>Book Title</th>
-                                                            <th>Reservation date</th>
-                                                            <th>Return Date</th>
-                                                            <th>Status</th>
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <?php foreach ($reservations as $reservation) : ?>
-                                                        <tr>
-                                                            <td><?php echo $reservation->getId(); ?></td>
-                                                            <td><?php echo $reservation->getReservationDate(); ?></td>
-                                                            <td><?php echo $reservation->getReturnDate(); ?></td>
-                                                            <td><?php echo $reservation->getIsReturned(); ?></td>
-                                                            <td><?php echo $reservation->getBookId(); ?></td>
-                                                            <td><span class="badge bg-info-subtle text-info"><?php echo $book->getAvailableCopies(); ?></span></td>
-                                                            <td>
-                                                                <a href="../../app/controllers/BookController.php?action=delete&book_id=<?php echo $book->getId(); ?>" class="btn btn-danger">Delete</a> 
-                                                                <a href="book-update.php?book_id=<?php echo $book->getId(); ?>" class="btn btn-info">Update</a> 
-                                                            </td>
-                                                        </tr>
-                                                        <?php endforeach; ?>
-                                                     </tbody>
-                                                </table>
+                                        </div> <!-- end card-->
+                                    </div> <!-- end col-->
+                                </div>
+                                <!-- end row -->
 
-                                                
-                                            </div>      
-                                        </div>
-                                    </div>                           
-                                </div> <!-- end card-->
-                            </div> <!-- end col-->
+                            </div>
+                            <!-- container -->
+
                         </div>
+
                         <!-- end row -->
 
                     </div>
                     <!-- container -->
 
                 </div>
-                    
-                    <!-- end row -->
+                <!-- content -->
 
-                </div>
-                <!-- container -->
-
-            </div>
-            <!-- content -->
-
-            <!-- Footer Start -->
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <script> document.write(new Date().getFullYear())  </script> © Created by<b> Mehdi</b>
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script> © Created by<b> Mehdi</b>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </footer>
-            <!-- end Footer -->
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
 
         </div>
+        <!-- END wrapper -->
 
-        <!-- ============================================================== -->
-        <!-- End Page content -->
-        <!-- ============================================================== -->
+        <!-- Vendor js -->
+        <script src="../../public/assets/js/vendor.min.js"></script>
 
-    </div> 
-    <!-- END wrapper -->
-
-    <!-- Vendor js -->
-    <script src="../../public/assets/js/vendor.min.js"></script>
-
-    <!-- Daterangepicker js -->
-    <script src="../../public/assets/vendor/daterangepicker/moment.min.js"></script>
-    <script src="../../public/assets/vendor/daterangepicker/daterangepicker.js"></script>
+        <!-- Daterangepicker js -->
+        <script src="../../public/assets/vendor/daterangepicker/moment.min.js"></script>
+        <script src="../../public/assets/vendor/daterangepicker/daterangepicker.js"></script>
 
 
-    <!-- Dashboard App js -->
-    <script src="../../public/assets/js/pages/dashboard.js"></script>
+        <!-- Dashboard App js -->
+        <script src="../../public/assets/js/pages/dashboard.js"></script>
 
 
-    <!-- App js -->
-    <script src="../../public/assets/js/app.min.js"></script>
+        <!-- App js -->
+        <script src="../../public/assets/js/app.min.js"></script>
 
 
 </body>
-</html> 
+
+</html>

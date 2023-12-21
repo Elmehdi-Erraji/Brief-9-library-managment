@@ -58,4 +58,56 @@ class ReservationDAO {
         }
     }
 
+    public static function getReservationsForUser($userId) {
+        $connection = db_conn::getConnection();
+        $reservations = [];
+
+        $query = "SELECT r.id AS reservation_id, r.reservation_date, r.return_date, r.is_returned, 
+                    b.title AS book_title
+              FROM reservation r
+              INNER JOIN book b ON r.book_id = b.id
+              WHERE r.users_id = ? ";
+    
+            $stmt = $connection->prepare($query);
+            $stmt->bind_param('i', $userId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result) {
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $reservation = new Reservation(
+                        $row['reservation_date'],
+                        $row['return_date'],
+                        $row['book_title'], // Get the book title from the query result
+                        $row['is_returned']
+                    );
+                    $reservation->id = $row['reservation_id']; // Set the reservation ID
+
+                    $reservations[] = $reservation;
+                }
+                $stmt->close();
+            }
+
+            return $reservations;
+            }
+
+                        
+            public static function deleteReservation($reservationId) {
+                $connection = db_conn::getConnection();
+
+                $query = "DELETE FROM reservation WHERE id = ?";
+                $stmt = $connection->prepare($query);
+                $stmt->bind_param('i', $reservationId);
+                $stmt->execute();
+
+                if ($stmt->affected_rows > 0) {
+                    // Deletion successful
+                    return true;
+                } else {
+                    // Deletion failed
+                    return false;
+                
+                 }
+            }
+
 }
