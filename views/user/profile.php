@@ -1,13 +1,9 @@
 <?php 
-
-
 session_start();
 
-
 require_once __DIR__ . '/../../vendor/autoload.php';
-
+use App\Controllers\ReservationController;
 use App\Methods\ReservationDAO;
-
 $userId = $_SESSION['user_id'] ;
 
 $reservationDAO = new ReservationDAO(); // Replace ReservationDAO with your actual DAO class
@@ -101,104 +97,103 @@ $reservationCount = $reservationDAO->getNumberOfReservationsForUser($userId);
 
                  
                     <!-- end row -->
+                    <div class="content-page">
+                <div class="content">
 
-                    <div class="row">
-                     
-                        <div class="col-xl-8">
-                            <!-- Todo-->
-                            <div class="card">
-                                <div class="card-body p-0">
-                                    <div class="p-3">
-                                        <div class="card-widgets">
-                                            <a href="javascript:;" data-bs-toggle="reload"><i class="ri-refresh-line"></i></a>
-                                            <a data-bs-toggle="collapse" href="#yearly-sales-collapse" role="button" aria-expanded="false" aria-controls="yearly-sales-collapse"><i class="ri-subtract-line"></i></a>
-                                            <a href="#" data-bs-toggle="remove"><i class="ri-close-line"></i></a>
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);"> </a></li>
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboards</a></li>
+                                            <li class="breadcrumb-item active">Welcome!</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Welcome!</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title -->
+
+                       
+                    
+                 
+
+                        <div class="row">
+                       
+
+                            <div class="col-xl-8">
+                                <!-- Todo-->
+                                <div class="card">
+                                    <div class="card-body p-0">
+                                        <div class="p-3">
+                                            <div class="card-widgets">
+                                                <a data-bs-toggle="collapse" href="#yearly-sales-collapse" role="button" aria-expanded="false" aria-controls="yearly-sales-collapse"><i class="ri-subtract-line"></i></a>
+                                                <a href="#" data-bs-toggle="remove"><i class="ri-close-line"></i></a>
+                                            </div>   
+
+                                            <div class="app-search d-none d-lg-block">
+                                            <form style="width: 40%;" id="searchForm">
+                                            <div class="input-group">
+                                                <input type="search" class="form-control" placeholder="Search..." id="searchInput">
+                                                <span class="ri-search-line search-icon text-muted"></span>
+                                            </div>
+                                        </form>
                                         </div>
-                                        <h5 class="header-title mb-0">Projects</h5>
-                                    </div>
-
-                                    <div id="yearly-sales-collapse" class="collapse show">
-
+                                        </div>
+                                       
+    
+                                        <div id="yearly-sales-collapse" class="collapse show">
+    
                                         <div class="table-responsive">
-                                            <table class="table table-nowrap table-hover mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Project Name</th>
-                                                        <th>Start Date</th>
-                                                        <th>Due Date</th>
-                                                        <th>Status</th>
-                                                        <th>Assign</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Velonic Admin v1</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>26/04/2015</td>
-                                                        <td><span class="badge bg-info-subtle text-info">Released</span></td>
-                                                        <td>Techzaa Studio</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Velonic Frontend v1</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>26/04/2015</td>
-                                                        <td><span class="badge bg-info-subtle text-info">Released</span></td>
-                                                        <td>Techzaa Studio</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Velonic Admin v1.1</td>
-                                                        <td>01/05/2015</td>
-                                                        <td>10/05/2015</td>
-                                                        <td><span class="badge bg-pink-subtle text-pink">Pending</span></td>
-                                                        <td>Techzaa Studio</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>Velonic Frontend v1.1</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>31/05/2015</td>
-                                                        <td><span class="badge bg-purple-subtle text-purple">Work in Progress</span></td>
-                                                        <td>Techzaa Studio</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>5</td>
-                                                        <td>Velonic Admin v1.3</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>31/05/2015</td>
-                                                        <td><span class="badge bg-warning-subtle text-warning">Coming soon</span></td>
-                                                        <td>Techzaa Studio</td>
-                                                    </tr>
+                                                <table class="table table-nowrap table-hover mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>Book Title</th>
+                                                            <th>Reservation date</th>
+                                                            <th>Return Date</th>
+                                                            <th>Status</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <?php foreach ($reservations as $reservation) : ?>
+                                                        <tr>
+                                                            <td><?php echo $reservation->getId(); ?></td>
+                                                            <td><?php echo $reservation->getReservationDate(); ?></td>
+                                                            <td><?php echo $reservation->getReturnDate(); ?></td>
+                                                            <td><?php echo $reservation->getIsReturned(); ?></td>
+                                                            <td><?php echo $reservation->getBookId(); ?></td>
+                                                            <td><span class="badge bg-info-subtle text-info"><?php echo $book->getAvailableCopies(); ?></span></td>
+                                                            <td>
+                                                                <a href="../../app/controllers/BookController.php?action=delete&book_id=<?php echo $book->getId(); ?>" class="btn btn-danger">Delete</a> 
+                                                                <a href="book-update.php?book_id=<?php echo $book->getId(); ?>" class="btn btn-info">Update</a> 
+                                                            </td>
+                                                        </tr>
+                                                        <?php endforeach; ?>
+                                                     </tbody>
+                                                </table>
 
-                                                    <tr>
-                                                        <td>6</td>
-                                                        <td>Velonic Admin v1.3</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>31/05/2015</td>
-                                                        <td><span class="badge bg-primary-subtle text-primary">Coming soon</span></td>
-                                                        <td>Techzaa Studio</td>
-                                                    </tr>
+                                                
+                                            </div>      
+                                        </div>
+                                    </div>                           
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
+                        </div>
+                        <!-- end row -->
 
-                                                    <tr>
-                                                        <td>7</td>
-                                                        <td>Velonic Admin v1.3</td>
-                                                        <td>01/01/2015</td>
-                                                        <td>31/05/2015</td>
-                                                        <td><span class="badge bg-danger-subtle text-danger">Cool</span></td>
-                                                        <td>Techzaa Studio</td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>        
-                                    </div>
-                                </div>                           
-                            </div> <!-- end card-->
-                        </div> <!-- end col-->
                     </div>
+                    <!-- container -->
+
+                </div>
+                    
                     <!-- end row -->
 
                 </div>
