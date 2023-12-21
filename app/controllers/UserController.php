@@ -119,6 +119,22 @@ class UserController {
         return [$userCount, $bookCount,$reservationcount];
         }
 
+
+        public function logout() {
+            session_start();
+    
+            // Unset all of the session variables
+            $_SESSION = [];
+    
+            // Destroy the session
+            session_destroy();
+    
+            // Redirect to the login page after logout
+            header('Location: /Brief-9-library-managment/views/auth/login.php'); // Redirect to your login page
+            exit();
+        }
+    
+
   
 }
 
@@ -245,4 +261,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateUser'])) {
     } else {
         echo "User not found.";
     }
+}
+
+
+if (isset($_GET['action']) && $_GET['action'] === 'logout') {
+    
+
+    $userController = new UserController();
+    $userController->logout();
 }

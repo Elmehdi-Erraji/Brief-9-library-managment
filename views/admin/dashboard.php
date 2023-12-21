@@ -271,17 +271,8 @@ if (!isset($_SESSION['user_id'])) {
                                 </script>
 
 
-
                                 <!-- Footer Start -->
-                                <footer class="footer">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="col-12 text-center">
-                                                <!-- <script>document.write(new Date().getFullYear())</script> ©   Created by<b> Mehdi</b> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </footer>
+                               
                                 <!-- end Footer -->
 
                             </div>
@@ -290,7 +281,16 @@ if (!isset($_SESSION['user_id'])) {
                             <!-- End Page content -->
                             <!-- ============================================================== -->
 
-                        </div>
+                        </div> 
+                        <footer class="footer">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12 text-center">
+                                                <script>document.write(new Date().getFullYear())</script> ©   Created by<b> Mehdi</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </footer>
                         <!-- END wrapper -->
 
                         <!-- Theme Settings -->
