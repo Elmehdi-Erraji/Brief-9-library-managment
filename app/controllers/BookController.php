@@ -36,15 +36,6 @@ class BookController {
 
 
 
-
-
-
-
-
-
-
-
-
 //User add logic
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['addBook'])) {

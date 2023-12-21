@@ -42,7 +42,6 @@ create table book (
 create table reservation (
 
     id int primary key AUTO-INCREMENT,
-    description text,
     reservation_date date ,
     return_date date,
     is_returned int,

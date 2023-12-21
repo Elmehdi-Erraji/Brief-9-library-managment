@@ -11,6 +11,8 @@ use App\Controllers\BookController;
 $bookController = new BookController();
 $books = $bookController->getBooks();
 
+$userId = $_SESSION['user_id'] ;
+
 ?>
 
 <!DOCTYPE html>
@@ -93,13 +95,14 @@ $books = $bookController->getBooks();
                             <div class="col-sm-6">
                                 <div class="card card-body">
                                     <h4 class="card-title"><?php echo $book->getTitle(); ?></h4>
+                                    <p class="card-text"><strong>Id:</strong> <?php echo $book->getId(); ?></p>
                                     <p class="card-text"><strong>Author:</strong> <?php echo $book->getAuthor(); ?></p>
                                     <p class="card-text"><strong>Genre:</strong> <?php echo $book->getGenre(); ?></p>
                                     <p class="card-text"><strong>Description:</strong> <?php echo $book->getDescription(); ?></p>
                                     <p class="card-text"><strong>Publication Year:</strong> <?php echo $book->getPublicationYear(); ?></p>
                                     <p class="card-text"><strong>Total Copies:</strong> <?php echo $book->getTotalCopies(); ?></p>
                                     <p class="card-text"><strong>Available Copies:</strong> <?php echo $book->getAvailableCopies(); ?></p>
-                                    <a href="javascript:void(0);" class="btn btn-primary" onclick="openModal('<?php echo $book->getTitle(); ?>', '<?php echo $book->getAuthor(); ?>', '<?php echo $book->getGenre(); ?>', '<?php echo $book->getDescription(); ?>', '<?php echo $book->getPublicationYear(); ?>', '<?php echo $book->getTotalCopies(); ?>', '<?php echo $book->getAvailableCopies(); ?>')">Reserve This book</a>
+                                    <a href="javascript:void(0);" class="btn btn-primary" onclick="openModal('<?php echo $book->getId(); ?>','<?php echo $book->getTitle(); ?>', '<?php echo $book->getAuthor(); ?>', '<?php echo $book->getGenre(); ?>', '<?php echo $book->getDescription(); ?>', '<?php echo $book->getPublicationYear(); ?>', '<?php echo $book->getTotalCopies(); ?>', '<?php echo $book->getAvailableCopies(); ?>')">Reserve This book</a>
                                 </div>
                             </div>
                         <?php } ?>
@@ -122,6 +125,7 @@ $books = $bookController->getBooks();
                         </div>
                         <div class="modal-body">
                             <h4 id="bookTitle" class="mb-3"></h4>
+                            <p><strong>Book ID:</strong> <span id="bookId"></span></p>
                             <p><strong>Author:</strong> <span id="bookAuthor"></span></p>
                             <p><strong>Genre:</strong> <span id="bookGenre"></span></p>
                             <p><strong>Description:</strong> <span id="bookDescription"></span></p>
@@ -132,8 +136,8 @@ $books = $bookController->getBooks();
                             <div id="errorMessages" style="color: red;"></div>
 
                             <form id="reservationForm" method="post" action="../../app/controllers/ReservationController.php">
-                                <input type="hidden" id="bookId" name="bookId" value="<?php echo $book->getId(); ?>">
-                                <input type="hidden" id="userId" name="userId" value="<?php echo $_SESSION['user_id']; ?>">
+                            <input type="hidden" id="bookIdInput" name="bookId" value="">
+                            <input type="hidden" id="" name="userId" value="<?php echo $userId?>">
                                 <div class="mb-3">
                                     <label for="reservationDate" class="form-label">Reservation Date</label>
                                     <input class="form-control" type="date" id="reservationDate" name="reservationDate" required>
@@ -144,14 +148,16 @@ $books = $bookController->getBooks();
                                     <input class="form-control" type="date" id="returnDate" name="returnDate" required>
                                 </div>
 
-                                <button type="submit" id="reserveButton" class="btn btn-primary">Reserve Book</button>
+                                <button type="submit" id="reserveButton" class="btn btn-primary" name="reserveButton">Reserve Book</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
             <script>
-                function openModal(title, author, genre, description, publicationYear, totalCopies, availableCopies) {
+                function openModal(bookId,title, author, genre, description, publicationYear, totalCopies, availableCopies) {
+                    document.getElementById('bookId').innerText = bookId;
+                    document.getElementById('bookIdInput').value = bookId;
                     document.getElementById('bookTitle').innerText = title;
                     document.getElementById('bookAuthor').innerText = author;
                     document.getElementById('bookGenre').innerText = genre;
