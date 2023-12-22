@@ -80,3 +80,11 @@ Contributions are welcome! Feel free to fork the repository and create a pull re
 
 ## WebApp Link == https://mehdi-raji.com/views/auth/login.php
 
+## Log in Info 
+
+- Admin => mail : said@gmail.com
+           pass : 123
+
+- Client => mail : mehdi@gmail.com
+           pass : 123
+
