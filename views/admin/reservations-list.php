@@ -11,7 +11,7 @@ $reservationController = new ReservationController();
 $reservations = $reservationController->getAllReservations();
 
 
-var_dump($reservations);
+
 ?>
 
 <!DOCTYPE html>
@@ -154,7 +154,7 @@ var_dump($reservations);
                                                             ?>
                                                         </td>
                                                         <td>
-                                                            <a href="../../app/controllers/ReservationController.php?action=delete&reservation_id=<?php echo $reservation->getId(); ?>&isReturned=<?php echo $reservation->getIsReturned(); ?>" class="btn btn-danger">Delete</a>
+                                                            <a href="../../app/controllers/ReservationController.php?action1=delete_admin&reservation_id=<?php echo $reservation->getId(); ?>&isReturned=<?php echo $reservation->getIsReturned(); ?>" class="btn btn-danger">Delete</a>
                                                             <a href="reservation-update.php?reservation_id=<?php echo $reservation->getId(); ?>" class="btn btn-info">Update</a>
                                                         </td>
                                                     </tr>
