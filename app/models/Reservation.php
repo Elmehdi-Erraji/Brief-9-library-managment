@@ -5,15 +5,15 @@ class Reservation {
     public $id;
     private $reservationDate;
     private $returnDate;
-    private $isReturned;
+    public $isReturned;
     private $bookId;
     private $userId;
 
-    public function __construct($reservationDate, $returnDate, $bookId, $userId) {
+    public function __construct($reservationDate, $returnDate,$isReturned, $bookId, $userId) {
        
         $this->reservationDate = $reservationDate;
         $this->returnDate = $returnDate;
-        $this->isReturned = 0; // 0 represents 'not returned'
+        $this->isReturned = $isReturned; // 0 represents 'not returned'
         $this->bookId = $bookId;
         $this->userId = $userId;
     }

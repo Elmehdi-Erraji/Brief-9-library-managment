@@ -14,6 +14,7 @@ $reservationCount = $reservationDAO->getNumberOfReservationsForUser($userId);
 
 $reservationController = new ReservationController();
 $reservations = $reservationController->getReservationsForUser($userId);
+
 ?>
 
 
@@ -47,6 +48,8 @@ $reservations = $reservationController->getReservationsForUser($userId);
 </head>
 
 <body>
+
+
     <!-- Begin page -->
     <div class="wrapper">
 
@@ -157,21 +160,26 @@ $reservations = $reservationController->getReservationsForUser($userId);
                                                             </thead>
 
                                                             <tbody>
-                                                                <?php foreach ($reservations as $reservation) : ?>
+                                                                <?php foreach ($reservations as $reservation) :?>
                                                                     <tr>
+                                                                   
 
                                                                         <td><?php echo $reservation->getId(); ?></td>
                                                                         <td><?php echo $reservation->getBookId(); ?></td>
                                                                         <td><?php echo $reservation->getReservationDate(); ?></td>
                                                                         <td><?php echo $reservation->getReturnDate(); ?></td>
+                                                                       
                                                                         <td>
                                                                             <?php
                                                                             $returnStatus = $reservation->getIsReturned();
-                                                                            if ($returnStatus === 1) {
+                                                                            if ($returnStatus === 0) {
+                                                                                echo '<span class="badge bg-warning-subtle text-warning">Pending</span>';
+                                                                            } else if ($returnStatus === 1) {
                                                                                 echo '<span class="badge bg-pink-subtle text-pink">Not Returned</span>';
-                                                                            } else if ($returnStatus === 0) {
+                                                                            } else if ($returnStatus === 2) {
                                                                                 echo '<span class="badge bg-info-subtle text-info">Returned</span>';
-                                                                            } else {
+                                                                            }
+                                                                            else {
                                                                                 echo '<span class="badge bg-warning">Unknown Status</span>';
                                                                             }
                                                                             ?>

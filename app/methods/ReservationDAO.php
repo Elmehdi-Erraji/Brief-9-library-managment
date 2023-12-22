@@ -78,10 +78,11 @@ class ReservationDAO {
                     $reservation = new Reservation(
                         $row['reservation_date'],
                         $row['return_date'],
-                        $row['book_title'], // Get the book title from the query result
+                        $row['is_returned'],
+                        $row['book_title'], 
                         $row['is_returned']
                     );
-                    $reservation->id = $row['reservation_id']; // Set the reservation ID
+                    $reservation->id = $row['reservation_id']; 
 
                     $reservations[] = $reservation;
                 }

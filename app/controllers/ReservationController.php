@@ -28,6 +28,7 @@ class ReservationController{
     public function getReservationsForUser($userId) {
         $usersReservations = ReservationDAO::getReservationsForUser($userId);
         return $usersReservations;
+        
     }
     // public function getReservations_admin() {
     //     $allReservation = ReservationDAO::getAllReservations_admin();
@@ -45,9 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserveButton'])) {
     $userId = $_POST['userId'];
     $reservationDate = $_POST['reservationDate'];
     $returnDate = $_POST['returnDate'];
+    $isReturned = 0;
 
     // Create a Reservation object
-    $reservation = new Reservation($reservationDate, $returnDate, $bookId, $userId);
+    $reservation = new Reservation($reservationDate, $returnDate, $isReturned,$bookId, $userId);
 
 
     $reservationController = new ReservationController();
