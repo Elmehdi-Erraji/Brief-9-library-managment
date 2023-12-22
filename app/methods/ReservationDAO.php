@@ -10,6 +10,30 @@ use App\Database\db_conn;
 class ReservationDAO {
 
     //remember to add a condition to chekc if there is available books first then add the reservation 
+    // public function addReservation(Reservation $reservation) {
+    //     $reservationDate = $reservation->getReservationDate();
+    //     $returnDate = $reservation->getReturnDate();
+    //     $bookId = $reservation->getBookId();
+    //     $userId = $reservation->getUserId();
+    //     $isReturned = 0; // Default value for is_returned
+    
+    //     try {
+    //         $conn = db_conn::getConnection();
+    
+    //         $sql = "INSERT INTO reservation (reservation_date, return_date, is_returned, book_id, users_id) 
+    //                 VALUES (?, ?, ?, ?, ?)";
+    
+    //         $stmt = $conn->prepare($sql);
+    //         $stmt->bind_param('ssiis', $reservationDate, $returnDate, $isReturned, $bookId, $userId);
+            
+    //         $stmt->execute();
+    
+    //         return true; 
+    //     } catch (\Exception $e) {
+    //         return false; 
+    //     }
+    // }
+
     public function addReservation(Reservation $reservation) {
         $reservationDate = $reservation->getReservationDate();
         $returnDate = $reservation->getReturnDate();
@@ -20,17 +44,38 @@ class ReservationDAO {
         try {
             $conn = db_conn::getConnection();
     
-            $sql = "INSERT INTO reservation (reservation_date, return_date, is_returned, book_id, users_id) 
-                    VALUES (?, ?, ?, ?, ?)";
+            // Check the number of available copies
+            $availableCopies = 0;
+            $checkAvailability = "SELECT availableCopies FROM book WHERE id = ?";
+            $stmtCheck = $conn->prepare($checkAvailability);
+            $stmtCheck->bind_param('i', $bookId);
+            $stmtCheck->execute();
+            $stmtCheck->bind_result($availableCopies);
+            $stmtCheck->fetch();
+            $stmtCheck->close();
     
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssiis', $reservationDate, $returnDate, $isReturned, $bookId, $userId);
-            
-            $stmt->execute();
+            if ($availableCopies > 0) {
+                // Update the number of available copies
+                $updateCopies = "UPDATE book SET availableCopies = availableCopies - 1 WHERE id = ?";
+                $stmtUpdate = $conn->prepare($updateCopies);
+                $stmtUpdate->bind_param('i', $bookId);
+                $stmtUpdate->execute();
+                $stmtUpdate->close();
     
-            return true; 
+                // Add the reservation
+                $sql = "INSERT INTO reservation (reservation_date, return_date, is_returned, book_id, users_id) 
+                        VALUES (?, ?, ?, ?, ?)";
+    
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('ssiis', $reservationDate, $returnDate, $isReturned, $bookId, $userId);
+                $stmt->execute();
+    
+                return true;
+            } else {
+                return false; // No available copies
+            }
         } catch (\Exception $e) {
-            return false; 
+            return false;
         }
     }
 
@@ -91,7 +136,33 @@ class ReservationDAO {
 
             return $reservations;
             }
-
+            public function getAllReservationsForAdmin() {
+                $connection = db_conn::getConnection();
+                $reservations = [];
+        
+                $query = "SELECT id, reservation_date, return_date, is_returned, book_id, users_id
+                          FROM reservation";
+        
+                $result = $connection->query($query);
+        
+                if ($result) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $reservation = new Reservation(
+                            $row['reservation_date'],
+                            $row['return_date'],
+                            $row['is_returned'],
+                            $row['book_id'],
+                            $row['users_id']
+                        );
+                        $reservation->id = $row['id'];
+        
+                        $reservations[] = $reservation;
+                    }
+                    $result->close();
+                }
+        
+                return $reservations;
+            }
                         
             public static function deleteReservation($reservationId) {
                 $connection = db_conn::getConnection();

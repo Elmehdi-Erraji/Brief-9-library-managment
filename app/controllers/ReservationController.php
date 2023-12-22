@@ -30,10 +30,11 @@ class ReservationController{
         return $usersReservations;
         
     }
-    // public function getReservations_admin() {
-    //     $allReservation = ReservationDAO::getAllReservations_admin();
-    //     return $allReservation;
-    // }
+    public function getAllReservations() {
+        $reservationDAO = new ReservationDAO();
+        $allReservation = $reservationDAO->getAllReservationsForAdmin();
+        return $allReservation;
+    }
 }
 
 
