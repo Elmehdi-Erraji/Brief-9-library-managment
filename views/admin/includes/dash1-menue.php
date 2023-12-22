@@ -82,9 +82,7 @@
             </a>
             <div class="collapse" id="sidebarServices">
                 <ul class="side-nav-second-level">
-                    <li>
-                        <a href="reservation-add.php">Add a reservation</a>
-                    </li>
+                   
                     <li>
                         <a href="reservations-list.php">Reservations List</a>
                     </li>
