@@ -177,4 +177,61 @@ class ReservationDAO {
                  }
             }
 
+
+            public function getReservationById($reservationId) {
+                $connection = db_conn::getConnection();
+                
+                $query = "SELECT * FROM reservation WHERE id = ?";
+                         
+                          
+        
+                $stmt = $connection->prepare($query);
+                $stmt->bind_param('i', $reservationId);
+                $stmt->execute();
+                $result = $stmt->get_result();
+        
+                if ($result->num_rows === 1) {
+                    $row = $result->fetch_assoc();
+                    // Create a Reservation object and set its properties using fetched data
+                    $reservation = new Reservation(
+                        $row['reservation_date'],
+                        $row['return_date'],
+                        $row['is_returned'],
+                        $row['users_id'],
+                        $row['book_id']
+                    );
+                    $reservation->id = $row['id'];
+                    return $reservation;
+                } else {
+                    // Handle case when reservation is not found or multiple reservations found
+                    return null;
+                }
+            }
+        
+
+            public function updateReservation($reservation) {
+                $connection = db_conn::getConnection();
+        
+                $query = "UPDATE reservation
+                          SET reservation_date = ?, return_date = ?, is_returned = ?
+                          WHERE id = ?";
+        
+                $stmt = $connection->prepare($query);
+                $reservationDate = $reservation->getReservationDate();
+                $returnDate = $reservation->getReturnDate();
+                $status = $reservation->getIsReturned();
+                $reservationId = $reservation->getId();
+        
+                $stmt->bind_param('ssii', $reservationDate, $returnDate, $status, $reservationId);
+                $stmt->execute();
+        
+                // Check if the update was successful
+                $rowsAffected = $stmt->affected_rows;
+        
+                $stmt->close();
+                return $rowsAffected > 0; // Returns true if the update affected any rows
+            }
+
+      
+
 }
