@@ -72,13 +72,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserveButton'])) {
 
 }
 
-if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['reservation_id'])) {
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['reservation_id']) && isset($_GET['isReturned'])) {
     $reservationId = $_GET['reservation_id'];
-
+    $isReturned = $_GET['isReturned'];
+if ($isReturned != 1){
     $reservationDAO = new ReservationDAO();
     $reservationDAO->deleteReservation($reservationId);
     
     // Redirect back to the reservations page after deletion
     header("Location: /Brief-9-library-managment/views/user/profile.php");
+}else{
+    echo "You can't delete this reservation until you return the book";
+}
     exit();
 }
