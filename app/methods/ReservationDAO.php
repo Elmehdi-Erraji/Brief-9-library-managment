@@ -44,24 +44,16 @@ class ReservationDAO {
         try {
             $conn = db_conn::getConnection();
     
-            // Check the number of available copies
-            $availableCopies = 0;
-            $checkAvailability = "SELECT availableCopies FROM book WHERE id = ?";
-            $stmtCheck = $conn->prepare($checkAvailability);
-            $stmtCheck->bind_param('i', $bookId);
-            $stmtCheck->execute();
-            $stmtCheck->bind_result($availableCopies);
-            $stmtCheck->fetch();
-            $stmtCheck->close();
+            // Update available copies and insert reservation in a single transaction
+            $conn->begin_transaction();
     
-            if ($availableCopies > 0) {
-                // Update the number of available copies
-                $updateCopies = "UPDATE book SET availableCopies = availableCopies - 1 WHERE id = ?";
-                $stmtUpdate = $conn->prepare($updateCopies);
-                $stmtUpdate->bind_param('i', $bookId);
-                $stmtUpdate->execute();
-                $stmtUpdate->close();
+            // Check and update available copies
+            $updateCopies = "UPDATE book SET availableCopies = availableCopies - 1 WHERE id = ? AND availableCopies > 0";
+            $stmtUpdate = $conn->prepare($updateCopies);
+            $stmtUpdate->bind_param('i', $bookId);
+            $stmtUpdate->execute();
     
+            if ($stmtUpdate->affected_rows > 0) {
                 // Add the reservation
                 $sql = "INSERT INTO reservation (reservation_date, return_date, is_returned, book_id, users_id) 
                         VALUES (?, ?, ?, ?, ?)";
@@ -70,12 +62,14 @@ class ReservationDAO {
                 $stmt->bind_param('ssiis', $reservationDate, $returnDate, $isReturned, $bookId, $userId);
                 $stmt->execute();
     
+                $conn->commit(); // Commit the transaction
                 return true;
             } else {
-                return false; // No available copies
+                $conn->rollback(); // Rollback changes if no available copies
+                return false; // No available copies or book not found
             }
         } catch (\Exception $e) {
-            return false;
+            return false; // Handle exceptions
         }
     }
 
@@ -153,6 +147,7 @@ class ReservationDAO {
                             $row['is_returned'],
                             $row['book_id'],
                             $row['users_id']
+                            
                         );
                         $reservation->id = $row['id'];
         

@@ -3,7 +3,6 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Controllers\ReservationController;
-use App\Methods\ReservationDAO;
 
 
 
@@ -12,7 +11,7 @@ $reservationController = new ReservationController();
 $reservations = $reservationController->getAllReservations();
 
 
-
+var_dump($reservations);
 ?>
 
 <!DOCTYPE html>
@@ -123,7 +122,7 @@ $reservations = $reservationController->getAllReservations();
                                             <thead>
                                                 <tr>
                                                     <th>ID</th>
-                                                    <th>Book Title</th>
+                                                    <th>Book ID</th>
                                                     <th>User ID</th>
                                                     <th>Reservation date</th>
                                                     <th>Return Date</th>
@@ -134,6 +133,7 @@ $reservations = $reservationController->getAllReservations();
                                             <tbody>
                                                 <?php foreach ($reservations as $reservation) : ?>
                                                     <tr>
+                                                        
                                                         <td><?php echo $reservation->getId(); ?></td>
                                                         <td><?php echo $reservation->getBookId(); ?></td>
                                                         <td><?php echo $reservation->getUserId(); ?></td> <!-- Display User ID -->
@@ -142,11 +142,11 @@ $reservations = $reservationController->getAllReservations();
                                                         <td>
                                                             <?php
                                                             $returnStatus = $reservation->getIsReturned();
-                                                            if ($returnStatus === 0) {
+                                                            if ($returnStatus === '0') {
                                                                 echo '<span class="badge bg-warning-subtle text-warning">Pending</span>';
-                                                            } else if ($returnStatus === 1) {
+                                                            } else if ($returnStatus === '1') {
                                                                 echo '<span class="badge bg-pink-subtle text-pink">Not Returned</span>';
-                                                            } else if ($returnStatus === 2) {
+                                                            } else if ($returnStatus === '2') {
                                                                 echo '<span class="badge bg-info-subtle text-info">Returned</span>';
                                                             } else {
                                                                 echo '<span class="badge bg-warning">Unknown Status</span>';
