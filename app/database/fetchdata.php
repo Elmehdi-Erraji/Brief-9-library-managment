@@ -25,7 +25,7 @@ function fetchDataFromDB() {
         $data[] = $row;
     }
 
-    return $data;
+    return $data;//assosciative array
 }
 
 // Fetch data

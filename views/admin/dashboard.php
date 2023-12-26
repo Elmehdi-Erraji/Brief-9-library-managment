@@ -269,10 +269,6 @@ if (isset($_SESSION['role_id']) && $_SESSION['role_id'] != 1) {
                                             tableBody.appendChild(newRow);
                                         });
                                     }
-
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        fetchData();
-                                    });
                                 </script>
 
 

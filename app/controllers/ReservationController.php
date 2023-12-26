@@ -70,6 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reserveButton'])) {
     }
 }
 
+
+
 if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['reservation_id']) && isset($_GET['isReturned'])) {
     $reservationId = $_GET['reservation_id'];
     $isReturned = $_GET['isReturned'];
@@ -84,6 +86,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['reser
     }
     exit();
 }
+
+
 
 
 if (isset($_GET['action1']) && $_GET['action1'] === 'delete_admin' && isset($_GET['reservation_id']) && isset($_GET['isReturned'])) {

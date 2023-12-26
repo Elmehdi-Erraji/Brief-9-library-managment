@@ -35,5 +35,5 @@ class db_conn {
 $connection = db_conn::getConnection();
 
 if (!$connection) {
-    echo "Db is connected";
+    echo "Db is notconnected";
 }
