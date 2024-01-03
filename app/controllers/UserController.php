@@ -196,6 +196,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     } else {
         echo "User ID is missing.";
     }
+
+    
 }
 
 
